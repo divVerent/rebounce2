@@ -122,6 +122,9 @@ void unload_images()
 // change to mode 13h byte sequence
 void ReadSinglePlayerData ()
 {
+  if(SAVEPREFIX != "")
+    mkdir(SAVEPREFIX);
+
   errno = 0;
 
   PACKFILE *f = pack_fopen ((SAVEPREFIX + "rebounce.sav").c_str(), F_READ_PACKED);
@@ -210,6 +213,9 @@ void ReadSinglePlayerData ()
 
 void WriteSinglePlayerData ()
 {
+  if(SAVEPREFIX != "")
+    mkdir(SAVEPREFIX);
+
   errno = 0;
 
   PACKFILE *f = pack_fopen ((SAVEPREFIX + "rebounce.sav").c_str(), F_WRITE_PACKED);
@@ -218,10 +224,9 @@ void WriteSinglePlayerData ()
   pack_fputs (SpielerID.c_str(), f);
   pack_fputs ("\n", f);
 
-  FILE *f2 = fopen ("scores.htm", "w");
-  fprintf (f2, "<HTML><BODY><H1>ReBounce II scores - %s</H1>", Spielername.c_str());
-  fprintf (f2, "<SCRIPT LANGUAGE=\"JavaScript\" SRC=\"http://www.durchnull.de/where_cgi.js\"></SCRIPT>");
-  fprintf (f2, "<SCRIPT LANGUAGE=\"JavaScript\">document.write('<FORM METHOD=POST ACTION=\"'+cgi+'/hiscore.pl\">');</SCRIPT>");
+  FILE *f2 = fopen ((SAVEPREFIX + "scores.htm").c_str(), "w");
+  fprintf (f2, "<HTML><BODY onLoad=\"document.forms[0].submit();\"><H1>ReBounce II scores - %s</H1>", Spielername.c_str());
+  fprintf (f2, "<SCRIPT LANGUAGE=\"JavaScript\">document.write('<FORM METHOD=POST ACTION=\"http://rm.sudo.rm-f.org/rebounce2/hiscore.pl\">');</SCRIPT>");
   fprintf (f2, "<NOSCRIPT>Please activate JavaScript to make this work!</NOSCRIPT>");
   fprintf (f2, "<INPUT TYPE=hidden NAME=uid VALUE=\"%s\">", SpielerID.c_str());
   fprintf (f2, "<INPUT TYPE=hidden NAME=name VALUE=\"%s\">", Spielername.c_str());
@@ -281,7 +286,6 @@ void WriteSinglePlayerData ()
       "<INPUT TYPE=hidden NAME=chksum VALUE=\"%d\">"
       "<INPUT TYPE=submit VALUE=\"Send\">"
       "</FORM>"
-      "<SCRIPT LANGUAGE=\"JavaScript\">document.forms[0].submit();</SCRIPT>"
       "</BODY></HTML>", mychksum);
 
   fclose (f2);
@@ -1113,13 +1117,13 @@ int main(int argc, char **argv)
 
     if (ExitCode)
 #ifdef ALLEGRO_DOS
-      system ("start scores.htm");
+      system (("start " + SAVEPREFIX + "scores.htm").c_str());
 #else
 #ifdef ALLEGRO_WINDOWS
-    system ("start scores.htm");
+      system (("start " + SAVEPREFIX + "scores.htm").c_str());
 #else
 #ifdef ALLEGRO_LINUX
-    system ("xdg-open scores.htm");
+      system (("xdg-open " + SAVEPREFIX + "scores.htm").c_str());
 #else
     std::cout << "Please open scores.htm from the current directory in your" << std::endl
       << "favorite Web browser. It has to support JavaScript, however." << std::endl

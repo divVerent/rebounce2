@@ -13,7 +13,7 @@
 #ifdef WIN32
 # define SAVEPREFIX std::string("")
 #else
-# define SAVEPREFIX (getenv("HOME") ? std::string(getenv("HOME")) + "/." : std::string(""))
+# define SAVEPREFIX (getenv("HOME") ? std::string(getenv("HOME")) + "/.rebounce2/" : std::string(""))
 #endif
 
 typedef struct BITMAP *bitmap;
