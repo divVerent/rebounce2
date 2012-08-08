@@ -623,8 +623,8 @@ bool graphics_init (bool UseColor24, int EnableFullscreen)
     if (EnableFullscreen < 0)
     {
       // windowed+scaled
-      dw -= 64;
-      dh -= 64;
+      dw -= 128;
+      dh -= 128;
       if(w * dh > h * dw)
       {
         dw = (dw / w) * w;
