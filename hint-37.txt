@@ -1,0 +1,30 @@
+3m.mid
+This one is old
+===============
+
+A hard level, but you will make it.
+Note the gravity!
+
+Hint 1:
+Go on, but only step by step. Never
+do two steps at once. Otherwise you
+will be arrested.
+
+Hint 2:
+The upper corners are not too easy.
+Find out which switch is the right
+one (brings you _DOWN_) and write
+it down!
+
+Hint 3:
+You can reach a secret level from
+here. The lower labyrinths contain
+hidden sensors you may be able to
+hear. When you have touched all,
+the way to the secret level will
+be opened.
+
+Hint 4:
+This is the last one.
+
+!!! |-| /-\ |=   |° |-| \_/ |\| !!!

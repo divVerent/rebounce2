@@ -1,0 +1,61 @@
+#!/usr/bin/perl
+
+use strict;
+
+my $fn = $ARGV[0];
+$fn =~ /(.*)\..*/;
+my $fn2 = "$1.pcx";
+
+my ($w, $h) = (`file -b $fn | tee /dev/tty` =~ /(\d+) x (\d+)/);
+
+die "Invalid w/h"
+ unless $w * $h;
+
+die "Invalid size: must be multiples of 16"
+ if ($w % 16) || ($h % 16);
+ 
+print "Segmentizing $fn ($w x $h)\n";
+
+$/ = \3;
+
+open FH, "convert $fn RGB:- |"
+ or die "Could not popen convert1: $!";
+binmode FH;
+
+my $wb = $w / 16;
+my $hb = $h / 16;
+
+print "into $wb x $hb (16x16) blocks\n";
+
+my $w2 = $w + $wb - 1;
+my $h2 = $h + $hb - 1;
+
+print "new image size: $w2 x $h2\n";
+
+open FH2, "| convert -depth 8 -size ${w2}x$h2 RGB:- PCX:$fn2"
+ or die "Could not popen convert2: $!";
+binmode FH2;
+
+for my $y (0..$h-1)
+{
+ if ($y % 16 == 0 && $y != 0)
+ {
+  print FH2 "\000\000\000" x $w2;
+ }
+ for my $x (0..$w-1)
+ {
+  if ($x % 16 == 0 && $x != 0)
+  {
+   print FH2 "\000\000\000";
+  }
+  print FH2 scalar <FH>;
+ }
+}
+
+close FH2
+ or die "Could not pclose convert2: $?";
+ 
+close FH
+ or die "Could not pclose convert1: $?";
+
+print "OK\n";

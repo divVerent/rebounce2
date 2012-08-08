@@ -1,0 +1,156 @@
+#!/usr/bin/perl -w
+
+use strict;
+
+$| = 1;
+
+my $DEBUG;
+my $HOST = system ("c:\\command.com /c echo DOS found") ? 'linux' : 'dos';
+#my $HOST = $HOST;
+my $FLAGS = '';
+my $CROSS;
+my $TARGET = $HOST;
+my $DOCLEAN = 1;
+
+for (@ARGV)
+{
+ $DEBUG = 1
+  if (/^--debug$/i);
+ $DEBUG = 0
+  if (/^--no-debug$/i);
+ $TARGET = $1
+  if (/^--target=(.*)$/i);
+ $HOST = $1
+  if (/^--host=(.*)$/i);
+ $DOCLEAN = 0
+  if (/^--no-clean$/i);
+ do
+ { 
+  $CROSS = $1;
+  $FLAGS .= "CXX = $CROSS-g++\n";
+ } 
+  if (/^--cross=(.*)$/i);
+ $FLAGS .= "$1 = $2\n"
+  if (/^--make-(.*?)=(.*)$/i);
+ die <<END if (/^--help$/i);
+$0 usage:
+ --debug
+ --no-debug
+ --host=dos
+ --host=win32
+ --host=linux
+ --target=dos
+ --target=win32
+ --target=linux
+ --make-CXX=<c++ compiler and linker>
+ --make-LDFLAGS=<linker flags>
+ --make-CXXFLAGS=<c++ flags>
+ --cross=prefix
+ --no-clean
+
+END
+}
+
+sub Out
+{
+ print FH map { "$_\n" } @_;
+}
+
+open FH, ">config.out" or die "Cannot write to configure.out: $!";
+
+print "Configuring a $HOST host...\n";
+print "for a $TARGET target...\n";
+
+if ($TARGET eq 'dos')
+{
+ Out "EXEC_SUFFIX = .exe";
+ Out "ZIPPER = zip -9";
+ Out "ZIPEXT = zip";
+}
+
+if ($TARGET eq 'win32')
+{
+ Out "EXEC_SUFFIX = .exe";
+ Out "ZIPPER = zip -9";
+ Out "ZIPEXT = zip";
+}
+
+if ($TARGET eq 'linux')
+{
+ Out "EXEC_PREFIX = ";
+ Out "ZIPPER = tar czf";
+ Out "ZIPEXT = tar.gz";
+}
+
+if ($HOST eq 'dos')
+{
+}
+
+if ($HOST eq 'win32')
+{
+}
+
+if ($HOST eq 'linux')
+{
+}
+
+if ($HOST eq 'linux')
+{
+ Out "HOSTUNIX = 1";
+}
+
+Out "OS = $TARGET";
+
+if ($HOST eq 'dos')
+{
+ Out "RM = del";
+}
+
+my $LIBALLEG =
+{
+  dos => '-lalleg',
+  win32 => '-lalleg40',
+  linux => '' # BY HAND
+}->{$TARGET};
+my $CALLEG = '';
+
+if ($HOST eq $TARGET)
+{
+  $LIBALLEG = `allegro-config --shared`;
+  $CALLEG = `allegro-config --cflags` . ' ' . `allegro-config --cppflags`;
+  ($LIBALLEG, $CALLEG) =~ s/\n/ /g;
+}
+
+my $LDFLAGS = ($ENV{LDFLAGS} || "");
+my $CXXFLAGS = ($ENV{CXXFLAGS} || "");
+my $CPPFLAGS = ($ENV{CPPFLAGS} || "");
+
+if (!$DEBUG)
+{
+ Out "LDFLAGS = $LDFLAGS -s $LIBALLEG";
+ Out "CXXFLAGS = $CXXFLAGS $CPPFLAGS $CALLEG -Os";
+ print "in release mode...\n";
+}
+else
+{
+ Out "LDFLAGS = $LDFLAGS $LIBALLEG";
+ Out "CXXFLAGS = $CXXFLAGS $CPPFLAGS $CALLEG -ggdb3";
+ print "in debug mode...\n";
+}
+
+Out $FLAGS;
+
+for (<*>)
+{
+ next if /^Makefile$/ || /^CVS$/;
+ rename $_, lc $_;
+}
+
+close FH;
+
+print "Done.\n\n";
+sleep 1;
+
+print "Doing a `make clean`...\n";
+
+system "make clean" if $DOCLEAN;

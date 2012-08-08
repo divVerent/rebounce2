@@ -1,0 +1,27 @@
+#!/bin/sh
+
+./configure --target=win32 --cross=i586-mingw32msvc || exit 1
+OK=0
+while [ $OK == 0 ]; do
+        ( make dist datdist 2>&1 || ( > /tmp/distribute.rebounce2.err.$$ ) ) | tee /tmp/distribute.rebounce2.out.$$
+        [ -e /tmp/distribute.rebounce2.err.$$ ] \
+         && ! grep -i 'internal compiler error' < /tmp/distribute.rebounce2.out.$$ \
+         && exit 1
+        [ -e /tmp/distribute.rebounce2.err.$$ ] \
+         || OK=1
+        rm /tmp/distribute.rebounce2.err.$$
+        rm /tmp/distribute.rebounce2.out.$$
+done
+
+./configure || exit 1
+OK=0
+while [ $OK == 0 ]; do
+        ( make dist datdist 2>&1 || ( > /tmp/distribute.rebounce2.err.$$ ) ) | tee /tmp/distribute.rebounce2.out.$$
+        [ -e /tmp/distribute.rebounce2.err.$$ ] \
+         && ! grep -i 'internal compiler error' < /tmp/distribute.rebounce2.out.$$ \
+         && exit 1
+        [ -e /tmp/distribute.rebounce2.err.$$ ] \
+         || OK=1
+        rm /tmp/distribute.rebounce2.err.$$
+        rm /tmp/distribute.rebounce2.out.$$
+done

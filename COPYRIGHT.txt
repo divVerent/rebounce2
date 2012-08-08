@@ -1,0 +1,64 @@
+The whole collection is licensed under the General Public License, version 2
+(GPL2; see file COPYING.GPL2) or any later version.
+
+The following files are NOT by myself:
+
+Drum_000/*, Tone_000/*, default.cfg are from freepats
+(http://freepats.zenvoid.org/) and can be also used under a less restrictive
+license.
+
+The following files are derived from Xonotic files (revision
+xonotic-v0.6.0-247-gd223ab5) and are licensed under the same license:
+
+boden.wav: misc/hitground3.ogg
+expl.wav: weapons/flacexpl1.ogg
+gelost.wav: weapons/rocket_impact.ogg
+berti.pcx: models/player/erebus.iqm_0.tga
+boss2.pcx: models/player/ignis.iqm_0.tga
+boss4.pcx: gfx/hud/default/weapontuba.tga
+boss5.pcx: models/player/gak.iqm_0.tga
+24s.mid: sound/cdtracks/stairs.mid
+
+The following MIDI files are from http://www.kuhmann.com/Yamaha.htm
+(only those marked as "(Public Domain - MIDI format)" were used)
+and thus are in the Public Domain:
+
+15s.mid (021-Bach, JS - Toccata and Fugue in D.mid)
+1bs.mid (140-BACH, Johann Sebastian - Das Wohltemperierte Klavier I - Prelude & Fuge C-min BWV-847.mid)
+22s.mid (004-Bach, JS - Fugue (WTC Bk-1 No-3).mid)
+23s.mid (032-Beethoven - Symphony No-5 Mvt-1.mid)
+25s.mid (077-Debussy - Arabesque No-1 in E.mid)
+26s.mid (033-Boccherini - Minuet.mid)
+27s.mid (016-BEETHOVEN - Op-013 No-08 ''Pathetique'' 2nd-Mov 1799.mid)
+2bs.mid (017-BEETHOVEN - Op-013 No-08 ''Pathetique'' 3rd-Mov 1799.mid)
+32s.mid (033-BEETHOVEN - Op-027 No-02 Piano Sonata No-14 C-sharp-min ''Moonlight Sonata'' 1801 1st Mov.mid)
+34s.mid (002-BEETHOVEN - Op-002 No-01 Piano Sonata No-01 F-min 1st-Mov Allegro 1795.mid)
+36s.mid (015-BEETHOVEN - Op-013 No-08 ''Pathetique'' 1st-Mov 1799.mid)
+37s.mid (106-Grieg - In the Hall of the Mountain King (Peer Gynt).mid)
+38s.mid (Mozart 5 Sonate KV545 1st Mov.mid)
+3bs.mid (035-BEETHOVEN - Op-027 No-02 Piano Sonata No-14 C-sharp-min ''Moonlight Sonata'' 1801 3rd Mov.mid)
+42s.mid (025-Beethoven - Fuer Elise.mid)
+44s.mid (145-Mozart - Sonata in A 3rd Mvt-(Alla Turca) K-331.mid)
+5ss.mid (009-BEETHOVEN - Op-010 No-01 Piano Sonata No-05 C-min 1st-Mov 1798 (pb Wong).MID)
+61s.mid (034-BEETHOVEN - Op-027 No-02 Piano Sonata No-14 C-sharp-min ''Moonlight Sonata'' 1801 2nd Mov.mid)
+67s.mid (079-Debussy - Clair de lune.mid)
+
+The following MIDI files are by myself, and are also released under the GPL2 or
+any later version:
+
+1ss.mid (Rudolf Polzer - Sonata 2)
+21s.mid (Rudolf Polzer - Sonata 5)
+2ss.mid (Rudolf Polzer - Sonata 3)
+31s.mid (Rudolf Polzer - Sonata 2)
+ende.mid (Rudolf Polzer - Sonata 1)
+intro.mid (Rudolf Polzer - Sonata 1, Rebounce2 version)
+
+The other MIDI files were composed by an automatic composition generator (I do
+not know the tool any more) and thus do not constitute copyright. Therefore
+they are in the Public Domain. Two different tools were used; if you can identify
+which tool it was, I would be grateful:
+
+Tool 1: 12s.mid, 13s.mid, 14s.mid, 16s.mid, 17s.mid, 18s.mid, 19s.mid, 28s.mid, 3m.mid
+Tool 2: 2m.mid, 33s.mid, 35s.mid, 39s.mid, 3ss.mid
+
+Rudolf Polzer

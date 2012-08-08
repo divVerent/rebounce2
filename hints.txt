@@ -1,0 +1,134 @@
+01S
+practice jumping
+02S
+practice switching
+11S
+possible
+12S
+you can jump
+13S
+figure it out
+14S
+think about it
+15S
+be careful
+16S
+long-bearded
+17S
+the right one!
+18S
+fake exit
+19S
+toggle-o-matic
+1BS
+BOSS 1 - Zero Volume
+1SS
+S - Did you know they also do blend?^secret1.txt
+21S
+the right way
+22S
+f(*ck)(you);
+23S
+under water
+24S
+a little exercise
+25S
+against the clock
+26S
+AAAAAARGH!
+27S
+jump'n'run
+28S
+2b || !2b
+29S
+look!
+2BS
+BOSS 2 - Ignis Quis Vir
+2SS
+S - quidquid agis^secret2.txt
+31S
+strange
+32S
+nasty molecules?
+33S
+MEGABOUNCE II
+34S
+|' e |_ /-\ ><
+35S
+hahaha
+36S
+user-friendly
+37S
+Out of [CONTROL]
+38S
+DO NOT TOUCH!
+39S
+this one is old^hint-37.txt
+3BS
+BOSS 3 - The Author ][
+3SS
+S - TetrisWorld ][^secret3.txt
+41S
+(1) Possible!
+42S
+(1) Teleporter
+43S
+(1) drin !?!
+44S
+(1) Bombensicher
+45S
+(1) Geht noch
+46S
+(1) "HAE"?!?
+47S
+(1) Klein
+4BS
+(1) BOSS 1 - @!#%'n Tuba
+4SS
+(1) ]Die Probe[
+51S
+(1) Improbable!!
+52S
+(1) for(;;); ???
+53S
+(1) Leicht, oder?
+54S
+(1) A-chtung
+55S
+(1) Das Rennen
+56S
+(1) Tempo 180
+57S
+(1) Plattformen
+5BS
+(1) BOSS 2 - GAK!
+5SS
+(1) ]Verwirrend[
+61S
+(1) Impossible!!!
+62S
+(1) Aufgepasst!
+63S
+(1) MegaBounce
+64S
+(1) Nur 380kV
+65S
+(1) <I>schwer</I>
+66S
+(1) Irrwege
+67S
+(1) ?!?!?! ???
+6BS
+(1) BOSS 3 - The Author
+6SS
+(1) ]TetrisWorld[
+1M
+Bombs' Area
+2M
+Gigavolt
+3M
+JumpWorld
+4M
+What a hassle
+5M
+Gravity
