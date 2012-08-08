@@ -165,9 +165,7 @@ void ReadSinglePlayerData ()
 
     for (;/*ever*/;)
     {
-      SpielerAddr = Dialogs::ReadLn ("eMail adress", "");
-      if (!SpielerAddr.length ())
-	continue;                                      // Bitte den Namen!
+      SpielerAddr = Dialogs::ReadLn ("eMail adress (optional)", "");
       if (SpielerAddr.find ("&") != std::string::npos)
 	continue;                                      // kein Name mit &
       if (SpielerAddr.find ("=") != std::string::npos)
