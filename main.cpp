@@ -156,6 +156,10 @@ void ReadSinglePlayerData ()
 	continue;                                      // kein Name mit '
       if (Spielername.find ("\"") != std::string::npos)
 	continue;                                      // kein Name mit "
+      if (Spielername.find ("<") != std::string::npos)
+	continue;                                      // kein Name mit <
+      if (Spielername.find (">") != std::string::npos)
+	continue;                                      // kein Name mit >
       break;
     }
 
@@ -164,8 +168,6 @@ void ReadSinglePlayerData ()
       SpielerAddr = Dialogs::ReadLn ("eMail adress", "");
       if (!SpielerAddr.length ())
 	continue;                                      // Bitte den Namen!
-      if (SpielerAddr.find ("@") == std::string::npos)
-	continue;                                      // Vor- und Zuname, bitte
       if (SpielerAddr.find ("&") != std::string::npos)
 	continue;                                      // kein Name mit &
       if (SpielerAddr.find ("=") != std::string::npos)
@@ -174,8 +176,12 @@ void ReadSinglePlayerData ()
 	continue;                                      // kein Name mit :
       if (SpielerAddr.find ("'") != std::string::npos)
 	continue;                                      // kein Name mit '
-      if (Spielername.find ("\"") != std::string::npos)
+      if (SpielerAddr.find ("\"") != std::string::npos)
 	continue;                                      // kein Name mit "
+      if (SpielerAddr.find ("<") != std::string::npos)
+	continue;                                      // kein Name mit <
+      if (SpielerAddr.find (">") != std::string::npos)
+	continue;                                      // kein Name mit >
       break;
     }
 
