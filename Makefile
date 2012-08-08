@@ -102,15 +102,16 @@ patches.dat: default.cfg *.mid
 #	cp patches.dat dist/rebounce2-$(OS)-standalone
 #	cd dist/rebounce2-$(OS)-standalone; $(ZIPPER) ../rebounce2-$(OS)-standalone-withpatches.$(ZIPEXT) *
 
+VERSION := $(shell grep VERSION main.cpp | head -n 1 | cut -d '"' -f 2)
 datdist: datgame
-	rm -rf dist/rebounce2-$(OS)* || true
+	rm -rf dist/rebounce2-$(VERSION)-$(OS)* || true
 	mkdir dist || true
 	mkdir dist/rebounce2-$(OS) || true
 	cp rebounce2$(EXEC_SUFFIX) dist/rebounce2-$(OS)
 	cp rebounce2.dat dist/rebounce2-$(OS)
 	cp dll/$(OS)/* dist/rebounce2-$(OS) || true
 	cp patches.dat dist/rebounce2-$(OS)
-	cd dist/rebounce2-$(OS); $(ZIPPER) ../rebounce2-$(OS).$(ZIPEXT) *
+	cd dist/rebounce2-$(OS); $(ZIPPER) ../rebounce2-$(VERSION)-$(OS).$(ZIPEXT) *
 
 upx: upxgame
 	@echo Nothing more to do

@@ -18,7 +18,7 @@
 #include "keys.h"
 #include "animate.h"
 
-#define VERSION "2.X"
+#define VERSION "2.3"
 
 std::string Spielername = "*** N/A ***";
 std::string SpielerID = "1234567890";
@@ -110,7 +110,7 @@ void load_images()
 {
   PALETTE rgb;
   title_screen = ConvertBitmap (load_bitmap (Filename("TITLE.PCX").c_str(), rgb));
-  TextOut (title_screen, 160, 230, "v" VERSION " by R. Polzer <null@durchnull.de>");
+  TextOut (title_screen, 160, 230, "v" VERSION " by R. Polzer <divVerent@xonotic.org>");
   background_screen = ConvertBitmap (load_bitmap (Filename("back.pcx").c_str(), rgb));
 }
 void unload_images()
@@ -232,7 +232,7 @@ void WriteSinglePlayerData ()
 
   FILE *f2 = fopen ((SAVEPREFIX + "scores.htm").c_str(), "w");
   fprintf (f2, "<HTML><BODY onLoad=\"document.forms[0].submit();\"><H1>ReBounce II scores - %s</H1>", Spielername.c_str());
-  fprintf (f2, "<SCRIPT LANGUAGE=\"JavaScript\">document.write('<FORM METHOD=POST ACTION=\"http://rm.sudo.rm-f.org/rebounce2/hiscore.pl\">');</SCRIPT>");
+  fprintf (f2, "<SCRIPT LANGUAGE=\"JavaScript\">document.write('<FORM METHOD=POST ACTION=\"http://rebounce2.sudo.rm-f.org/hiscore.pl\">');</SCRIPT>");
   fprintf (f2, "<NOSCRIPT>Please activate JavaScript to make this work!</NOSCRIPT>");
   fprintf (f2, "<INPUT TYPE=hidden NAME=uid VALUE=\"%s\">", SpielerID.c_str());
   fprintf (f2, "<INPUT TYPE=hidden NAME=name VALUE=\"%s\">", Spielername.c_str());
@@ -1082,8 +1082,8 @@ int main(int argc, char **argv)
       DisplayMessage (buf, buf->w / 2, buf->h / 2, MakeVector
 	  (
 	   "Do you want to update the",
-	   "worldwide highscores on",
-	   "\001http://rebounce@durchnull.de",
+	   "worldwide highscores?",
+	   "\001http://rebounce2.sudo.rm-f.org",
 	   "(Y / N)",
 	   (const char *) 0
 	  )
@@ -1338,7 +1338,7 @@ void Credits (int EndingGame)
     "\001available for MS-DOS, Win32/DirectX",
     "\001and Linux (X-Window and console",
     "\001support) on",
-    "\001http://rebounce@durchnull.de",
+    "\001http://rebounce2.sudo.rm-f.org",
     "",
     "",
     "",
@@ -1364,7 +1364,7 @@ void Credits (int EndingGame)
     "for this GCC compiler",
     "",
     "\001Shawn Hargreaves",
-    "\001(talula.demon.co.uk/allegro)",
+    "\001(http://www.allegro.cc)",
     "for ALLEGRO, a good C library with",
     "everything a game programmer needs",
     "in it",
