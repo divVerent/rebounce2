@@ -1,0 +1,12 @@
+ReBounce II
+
+How to compile and run:
+
+Linux:
+
+# install Allegro library, version 4
+./configure
+make debuggame
+./rebounce2
+
+
