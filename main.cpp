@@ -125,7 +125,7 @@ void unload_images()
 void ReadSinglePlayerData ()
 {
   if(SAVEPREFIX != "")
-    mkdir(SAVEPREFIX.c_str(), 0755);
+    MKDIR(SAVEPREFIX.c_str(), 0755);
 
   errno = 0;
 
@@ -216,7 +216,7 @@ void ReadSinglePlayerData ()
 void WriteSinglePlayerData ()
 {
   if(SAVEPREFIX != "")
-    mkdir(SAVEPREFIX.c_str(), 0755);
+    MKDIR(SAVEPREFIX.c_str(), 0755);
 
   errno = 0;
 

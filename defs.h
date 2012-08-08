@@ -10,10 +10,12 @@
 #include <stdlib.h>
 #include <allegro.h>
 
-#ifdef WIN32
+#ifdef ALLEGRO_WINDOWS
 # define SAVEPREFIX std::string("")
+# define MKDIR(f,m) mkdir(f)
 #else
 # define SAVEPREFIX (getenv("HOME") ? std::string(getenv("HOME")) + "/.rebounce2/" : std::string(""))
+# define MKDIR(f,m) mkdir(f,m)
 #endif
 
 typedef struct BITMAP *bitmap;
