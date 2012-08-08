@@ -26,8 +26,8 @@ extern bool EnableVSync;
 extern bool EnableSound;
 extern bitmap savescreen;
 
-extern int CACHEWIDTH;
-extern int CACHEHEIGHT;
+#define CACHEWIDTH (SCRWIDTH * 2)
+#define CACHEHEIGHT (SCRHEIGHT * 2)
 extern int HUD;
 extern int SCRWIDTH;
 extern int SCRHEIGHT;

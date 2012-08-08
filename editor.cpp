@@ -202,8 +202,28 @@ void draw_entities (bitmap screen, IO::IOEntityContainer &cont, int scrx, int sc
   for (unsigned int i = 0; i < list.size(); ++i)
   {
     Sprite::Sprites[list[i]->groupnum][list[i]->sprnum].draw (screen, list[i]->x-scrx, list[i]->y-scry);
-    rect (screen, list[i]->x-scrx, list[i]->y-scry, list[i]->x-scrx+list[i]->w-1, list[i]->y-scry+list[i]->h-1,
-	list[i] == selected ? makecol (255, 255, 255) : makecol (128, 128, 128));
+    long col = list[i] == selected ? makecol (255, 255, 255) : makecol (128, 128, 128);
+    rect (screen, list[i]->x-scrx, list[i]->y-scry, list[i]->x-scrx+list[i]->w-1, list[i]->y-scry+list[i]->h-1, col);
+    std::string info;
+    if(list[i]->properties.find("targetname") != list[i]->properties.end())
+      info = list[i]->properties["targetname"];
+    if(list[i]->properties.find("target") != list[i]->properties.end())
+      info = info + "->" + list[i]->properties["target"];
+    if(info != "")
+    {
+      int x = list[i]->x+list[i]->w/2-scrx;
+      int y = list[i]->y+list[i]->h-scry;
+      int col0 = makecol(0,0,0);
+      textout_centre_ex(screen, font, info.c_str(), x+1, y+1, col0, -1);
+      textout_centre_ex(screen, font, info.c_str(), x+1, y-1, col0, -1);
+      textout_centre_ex(screen, font, info.c_str(), x-1, y+1, col0, -1);
+      textout_centre_ex(screen, font, info.c_str(), x-1, y-1, col0, -1);
+      textout_centre_ex(screen, font, info.c_str(), x, y+1, col0, -1);
+      textout_centre_ex(screen, font, info.c_str(), x, y-1, col0, -1);
+      textout_centre_ex(screen, font, info.c_str(), x-1, y, col0, -1);
+      textout_centre_ex(screen, font, info.c_str(), x+1, y, col0, -1);
+      textout_centre_ex(screen, font, info.c_str(), x, y, col, -1);
+    }
   }
 }
 
@@ -249,6 +269,9 @@ void load_additional_sprites (nsEntity::IOEntity &e)
 
 int main(int argc, char **argv)
 {
+  if(argc>2) SCRWIDTH=str2int(argv[2]);
+  if(argc>3) SCRHEIGHT=str2int(argv[3]);
+
   allegro_init ();
   install_keyboard ();
   if (!graphics_init (1, 0))
