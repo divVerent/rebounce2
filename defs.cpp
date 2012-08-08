@@ -607,7 +607,7 @@ namespace
   int scaleH = 0;
 };
 bitmap savescreen = NULL;
-bool graphics_init (bool UseColor24, bool EnableFullscreen)
+bool graphics_init (bool UseColor24, int EnableFullscreen)
 {
   int dw = 0, dh = 0;
   int w = SCRWIDTH;
@@ -619,26 +619,44 @@ bool graphics_init (bool UseColor24, bool EnableFullscreen)
     if(depth <= 0)
       depth = 32;
     set_color_depth (depth);
-    if (!set_gfx_mode (GFX_AUTODETECT_FULLSCREEN, dw, dh, 0, 0))
+
+    if (EnableFullscreen < 0)
+    {
+      // windowed+scaled
+      dw -= 64;
+      dh -= 64;
+      if(w * dh > h * dw)
+      {
+        dw = (dw / w) * w;
+        dh = (dw * h) / w;
+      }
+      else
+      {
+        dh = (dh / h) * h;
+        dw = (dh * w) / h;
+      }
+    }
+
+    if (!set_gfx_mode ((EnableFullscreen > 0) ? GFX_AUTODETECT_FULLSCREEN : GFX_AUTODETECT_WINDOWED, dw, dh, 0, 0))
     {
       savescreen = screen;
       set_color_conversion (COLORCONV_NONE);
       if(w != SCREEN_W || h != SCREEN_H)
       {
         doScale = true;
-	if(w * SCREEN_H > h * SCREEN_W)
-	{
+        if(w * SCREEN_H > h * SCREEN_W)
+        {
           scaleW = (SCREEN_W / w) * w;
           scaleH = (scaleW * h) / w;
-	}
-	else
-	{
+        }
+        else
+        {
           scaleH = (SCREEN_H / h) * h;
           scaleW = (scaleH * w) / h;
-	}
+        }
         scaleX = (SCREEN_W - scaleW) / 2;
         scaleY = (SCREEN_H - scaleH) / 2;
-	savescreen = create_optimized_bitmap(w, h);
+        savescreen = create_optimized_bitmap(w, h);
       }
       return 1;
     }
@@ -647,28 +665,28 @@ bool graphics_init (bool UseColor24, bool EnableFullscreen)
   if (UseColor24)
   {
     set_color_depth (32);
-    if (!set_gfx_mode (EnableFullscreen ? GFX_AUTODETECT_FULLSCREEN : GFX_AUTODETECT_WINDOWED, w, h, 0, 0))
+    if (!set_gfx_mode ((EnableFullscreen > 0) ? GFX_AUTODETECT_FULLSCREEN : GFX_AUTODETECT_WINDOWED, w, h, 0, 0))
     {
       savescreen = screen;
       set_color_conversion (COLORCONV_NONE);
       return 1;
     }
     set_color_depth (24);
-    if (!set_gfx_mode (EnableFullscreen ? GFX_AUTODETECT_FULLSCREEN : GFX_AUTODETECT_WINDOWED, w, h, 0, 0))
+    if (!set_gfx_mode ((EnableFullscreen > 0) ? GFX_AUTODETECT_FULLSCREEN : GFX_AUTODETECT_WINDOWED, w, h, 0, 0))
     {
       savescreen = screen;
       set_color_conversion (COLORCONV_NONE);
       return 1;
     }
     set_color_depth (16);
-    if (!set_gfx_mode (EnableFullscreen ? GFX_AUTODETECT_FULLSCREEN : GFX_AUTODETECT_WINDOWED, w, h, 0, 0))
+    if (!set_gfx_mode ((EnableFullscreen > 0) ? GFX_AUTODETECT_FULLSCREEN : GFX_AUTODETECT_WINDOWED, w, h, 0, 0))
     {
       savescreen = screen;
       set_color_conversion (COLORCONV_NONE);
       return 1;
     }
     set_color_depth (15);
-    if (!set_gfx_mode (EnableFullscreen ? GFX_AUTODETECT_FULLSCREEN : GFX_AUTODETECT_WINDOWED, w, h, 0, 0))
+    if (!set_gfx_mode ((EnableFullscreen > 0) ? GFX_AUTODETECT_FULLSCREEN : GFX_AUTODETECT_WINDOWED, w, h, 0, 0))
     {
       savescreen = screen;
       set_color_conversion (COLORCONV_NONE);

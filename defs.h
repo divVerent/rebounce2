@@ -42,7 +42,7 @@ bitmap create_optimized_bitmap (int w, int h);
 void free_optimized_bitmap (bitmap bmp);
 void check_bitmap_memory ();
 
-bool graphics_init (bool UseColor24 = 0, bool EnableFullscreen = 1);
+bool graphics_init (bool UseColor24 = 0, int EnableFullscreen = 1);
 void graphics_done (void);
 bool sound_init ();
 

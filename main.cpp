@@ -919,7 +919,7 @@ int main(int argc, char **argv)
   {
     bool Use24 = 1;
     int ExitCode = 0;
-    bool EnableFullscreen = 1;
+    int EnableFullscreen = 1;
     bool AutoScreenshot = 0;
     for (int i = 1; i < argc; ++i)
     {
@@ -950,6 +950,11 @@ int main(int argc, char **argv)
 	EnableFullscreen = 0;
 	continue;
       }
+      if (!strcmp (argv [i], "bigwindow"))
+      {
+	EnableFullscreen = -1;
+	continue;
+      }
       if (!strcmp (argv [i], "thomas-jaeger"))
       {
 	for (int *p = keycodes; *p != 0; ++++p)
@@ -967,6 +972,7 @@ int main(int argc, char **argv)
       }
       std::cerr << "Options: " << std::endl;
       std::cerr << " window    disable fullscreen" << std::endl;
+      std::cerr << " bigwindow disable fullscreen, big window" << std::endl;
       std::cerr << " novsync   disable vsync" << std::endl;
       std::cerr << " low       Use lower color depth" << std::endl;
       return 0;
