@@ -4,6 +4,8 @@
 #include <iostream>
 #include <map>
 #include <stdio.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #include "rebounce.h"
 
@@ -123,7 +125,7 @@ void unload_images()
 void ReadSinglePlayerData ()
 {
   if(SAVEPREFIX != "")
-    mkdir(SAVEPREFIX);
+    mkdir(SAVEPREFIX.c_str(), 0755);
 
   errno = 0;
 
@@ -214,7 +216,7 @@ void ReadSinglePlayerData ()
 void WriteSinglePlayerData ()
 {
   if(SAVEPREFIX != "")
-    mkdir(SAVEPREFIX);
+    mkdir(SAVEPREFIX.c_str(), 0755);
 
   errno = 0;
 
@@ -1122,10 +1124,10 @@ int main(int argc, char **argv)
 #ifdef ALLEGRO_WINDOWS
       system (("start " + SAVEPREFIX + "scores.htm").c_str());
 #else
-#ifdef ALLEGRO_LINUX
+#ifdef ALLEGRO_UNIX
       system (("xdg-open " + SAVEPREFIX + "scores.htm").c_str());
 #else
-    std::cout << "Please open scores.htm from the current directory in your" << std::endl
+    std::cout << "Please open " + SAVEPREFIX + "scores.htm in your" << std::endl
       << "favorite Web browser. It has to support JavaScript, however." << std::endl
       << "Netscape, IE, Opera and Konqueror are suitable for this." << std::endl
       << std::endl;
