@@ -247,7 +247,7 @@ void load_additional_sprites (nsEntity::IOEntity &e)
     ::IO::ReadSpriteData (Filename (e.properties[string("SPRITESET") + int2str(i)]).c_str(), i);
 }
 
-int main()
+int main(int argc, char **argv)
 {
   allegro_init ();
   install_keyboard ();
@@ -258,7 +258,7 @@ int main()
   Sound::init ();
   Timer::init_timer ();
 
-  string s = Dialogs::ReadLn("Name des zu ladenden Levels", "new");
+  string s = (argc>1) ? std::string(argv[1]) : Dialogs::ReadLn("Name des zu ladenden Levels", "new");
 
   try
   {
