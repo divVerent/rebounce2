@@ -110,7 +110,7 @@ void load_images()
 {
   PALETTE rgb;
   title_screen = ConvertBitmap (load_bitmap (Filename("TITLE.PCX").c_str(), rgb));
-  TextOut (title_screen, 160, 230, "v" VERSION " by R. Polzer <divVerent@xonotic.org>");
+  TextOut (title_screen, 160, 230, "v" VERSION " http://rebounce2.sudo.rm-f.org");
   background_screen = ConvertBitmap (load_bitmap (Filename("back.pcx").c_str(), rgb));
 }
 void unload_images()
