@@ -140,12 +140,6 @@ else
 
 Out $FLAGS;
 
-for (<*>)
-{
- next if /^Makefile$/ || /^CVS$/;
- rename $_, lc $_;
-}
-
 close FH;
 
 print "Done.\n\n";
