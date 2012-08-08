@@ -18,7 +18,7 @@
 #include "keys.h"
 #include "animate.h"
 
-#define VERSION "2.3"
+#define VERSION "2.3b1"
 
 std::string Spielername = "*** N/A ***";
 std::string SpielerID = "1234567890";
