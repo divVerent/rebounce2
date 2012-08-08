@@ -9,4 +9,20 @@ Linux:
 make debuggame
 ./rebounce2
 
+Keys:
 
+Player 1:
+UP		up/jump
+DOWN		down
+LEFT		left
+RIGHT		right
+SPACE, ENTER	toggle/throw bomb
+CTRL		extra acceleration (if available)
+
+Player 2:
+T		up/jump
+G		down
+F		left
+H		right
+TAB		toggle/throw bomb
+Q		extra acceleration (if available)
