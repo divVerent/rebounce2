@@ -1194,8 +1194,6 @@ std::string LevelWaehlen (const sp_t &Levels, bool NoScores)
   std::vector <std::string> LevelNames;
   for (std::multimap <std::string, int>::iterator i = lvl.begin (); i != lvl.end (); ++i)
   {
-    if (i->first [0] == '0')
-      continue;   // no practice levels!
     LevelIDs.push_back (i->first);
     LevelNames.push_back (hints [i->first] +
 	(
