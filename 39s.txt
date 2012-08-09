@@ -1,0 +1,16 @@
+ 1. finish maze, go to RIGHT teleport -> top left
+ 2. go down, flip RIGHT switch, do not move, flip switch, use RIGHT teleport -> bottom right
+ 3. finish maze, go to LEFT teleport -> top right
+ 4. go down, flip RIGHT switch, move left, flip switch, use RIGHT teleport -> top right again
+ 5. go left, down, use pipe, flip switch -> 1/5 done
+ 6. go back, left, down, right, flip switch -> bottom left
+ 7. finish maze, go to RIGHT teleport -> top left
+ 8. go right, down, use left pipe, flip switch -> 2/5 done
+ 9. go back, right, use pipe, flip switch -> 3/5 done
+10. use pipe, go right, use pipe, flip switch -> 4/5 done
+11. go back, go back, go back, flip switch, teleport -> bottom right
+12. finish maze, go to LEFT teleport -> top right
+13. go left to the end, use pipe, flip switch -> 5/5 done
+14. go back, go to teleport -> bottom right
+15. finish maze, go to LEFT teleport -> top right
+16. go left -> EXIT

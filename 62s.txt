@@ -1,0 +1,10 @@
+fall left, toggle startdoor1, left, toggle startdoor4
+fall right, right, toggle maindoory
+fall left, right, left, toggle startdoor3
+fall right, left, toggle maindoorx
+fall left, left
+teleport to maindoor
+fall into 2nd slime from right
+2nd bottom teleport
+toggle ball
+exit
