@@ -179,15 +179,17 @@ namespace Objects
       world->Register (this, ::World::_world::KILLABLE, 0);
       if (!world->iendtimer)
 	world->iendtimer = world->itimer;
-      world->StopMusic ();
       if (flags & ::World::_world::EXITTED)
       {
+        world->StopMusic ();
 	Border (255, 255, 255);
 	world->PlaySound (this, "super.wav", 128, 1);
 	nextthink = 2500;
       }
       else
       {
+        if(lives.empty())
+          world->StopMusic ();
 	Border (255, 0, 0);
 	throw_bomb (this, 32, -1, 0);
 	nextthink = 1300;
