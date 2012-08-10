@@ -13,6 +13,7 @@ xonotic-v0.6.0-247-gd223ab5) and are licensed under the same license:
 boden.wav: misc/hitground3.ogg
 expl.wav: weapons/flacexpl1.ogg
 gelost.wav: weapons/rocket_impact.ogg
+respawn.wav: misc/poweroff.wav
 berti.pcx: models/player/erebus.iqm_0.tga
 boss2.pcx: models/player/ignis.iqm_0.tga
 boss4.pcx: gfx/hud/default/weapontuba.tga
