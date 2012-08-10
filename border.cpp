@@ -1,9 +1,10 @@
 #include "border.h"
 #include "alleg.h"
 
+static RGB rgb;
+
 void Border (int r, int g, int b)
 {
-  static RGB rgb;
   rgb.r = r;
   rgb.g = g;
   rgb.b = b;
@@ -12,8 +13,6 @@ void Border (int r, int g, int b)
 
 void GetBorder (int &r, int &g, int &b)
 {
-  static RGB rgb;
-  get_color (0, &rgb);
   r = rgb.r;
   g = rgb.g;
   b = rgb.b;

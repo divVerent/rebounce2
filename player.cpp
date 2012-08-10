@@ -46,6 +46,7 @@ namespace Objects
     bitmap my_hud;
     bool left, right, up, down, e;
     int efactor;
+    int savesprnum;
    public:
     int numbombs;
     int radius;
@@ -54,8 +55,10 @@ namespace Objects
     int maxenergy;
     int energy;
     int loser;
+    typedef std::vector<std::pair<int, int> > lives_t;
+    lives_t lives;
     Player (nsEntity::ConfigMap &m, nsEntity::Entity *w) : Entity (m, w)
-      , up(0), down(0), left(0), right(0), e(0), loser(0)
+      , up(0), down(0), left(0), right(0), e(0), loser(0), savesprnum(sprnum)
       {
 	teleportable = 1;
 	Border (0, 255, 0);
@@ -221,7 +224,25 @@ namespace Objects
       if (flags & ::World::_world::DISABLED)
       {
 	if (loser)
+        {
+          if(!lives.empty())
+          {
+            // unkill
+            world->Register (this, ::World::_world::DISABLED, 0);
+            world->Register (this, ::World::_world::KILLABLE, 1);
+            world->iendtimer = 0;
+            world->StopMusic ();
+            Border (0, 255, 0);
+            loser = 0;
+            sprnum = savesprnum;
+            std::pair<int, int> xy = lives.back();
+	    lives.pop_back();
+            x = xy.first;
+            y = xy.second;
+            return 1;
+          }
 	  world->PlaySound (this, "gelost.wav", 128, 1);
+        }
 	world->kill (this);
 	return 1;
       }
@@ -391,6 +412,18 @@ namespace Objects
     }
   };
 
+  EXTEND (Item_ExtraLife, Item)
+  {
+   public:
+    Item_ExtraLife (nsEntity::ConfigMap &m, nsEntity::Entity *w) : Item (m, w)
+    {
+    }
+    void take_me (Player *pl)
+    {
+      pl->lives.push_back(std::make_pair(x + w/2, y + h/2));
+    }
+  };
+
   BEGIN_OBJECTS_LIST (AddPlayer)
 
     ADD_ENTITY_TYPE (Player);
@@ -418,6 +451,10 @@ namespace Objects
   /*
      int value = 10;
      */
+
+  ADD_ENTITY_TYPE (Item_ExtraLife);
+  /*
+  */
 
   END_OBJECTS_LIST
 }

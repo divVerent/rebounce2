@@ -6,6 +6,7 @@
 #include <map>
 #include "alleg.h"
 #include "milli.h"
+#include "border.h"
 
 // #define PROFILE
 // #define ALLINONE
@@ -603,6 +604,7 @@ namespace
   int scaleY = 0;
   int scaleW = 0;
   int scaleH = 0;
+  int borderSize = 0;
 };
 bitmap savescreen = NULL;
 bool graphics_init (bool UseColor24, int EnableFullscreen)
@@ -617,6 +619,8 @@ bool graphics_init (bool UseColor24, int EnableFullscreen)
     if(depth <= 0)
       depth = 32;
     set_color_depth (depth);
+
+    borderSize = 16;
 
     if (EnableFullscreen < 0)
     {
@@ -633,29 +637,35 @@ bool graphics_init (bool UseColor24, int EnableFullscreen)
         dh = (dh / h) * h;
         dw = (dh * w) / h;
       }
+
+      // border emulation
+      dw += 2 * borderSize;
+      dh += 2 * borderSize;
     }
 
     if (!set_gfx_mode ((EnableFullscreen > 0) ? GFX_AUTODETECT_FULLSCREEN : GFX_AUTODETECT_WINDOWED, dw, dh, 0, 0))
     {
       savescreen = screen;
       set_color_conversion (COLORCONV_NONE);
-      if(w != SCREEN_W || h != SCREEN_H)
+
+      dw = SCREEN_W - 2 * borderSize;
+      dh = SCREEN_H - 2 * borderSize;
+
+      doScale = true;
+      if(w * SCREEN_H > h * SCREEN_W)
       {
-        doScale = true;
-        if(w * SCREEN_H > h * SCREEN_W)
-        {
-          scaleW = (SCREEN_W / w) * w;
-          scaleH = (scaleW * h) / w;
-        }
-        else
-        {
-          scaleH = (SCREEN_H / h) * h;
-          scaleW = (scaleH * w) / h;
-        }
-        scaleX = (SCREEN_W - scaleW) / 2;
-        scaleY = (SCREEN_H - scaleH) / 2;
-        savescreen = create_optimized_bitmap(w, h);
+        scaleW = (SCREEN_W / w) * w;
+        scaleH = (scaleW * h) / w;
       }
+      else
+      {
+        scaleH = (SCREEN_H / h) * h;
+        scaleW = (scaleH * w) / h;
+      }
+      scaleX = (dw - scaleW) / 2 + borderSize;
+      scaleY = (dh - scaleH) / 2 + borderSize;
+      savescreen = create_optimized_bitmap(w, h);
+
       return 1;
     }
   }
@@ -767,6 +777,20 @@ void update_screen (bitmap buffer)
   {
     blit (buffer, savescreen, 0, 0, 0, 0, buffer->w, buffer->h);
     stretch_blit (buffer, screen, 0, 0, buffer->w, buffer->h, scaleX, scaleY, scaleW, scaleH);
+    int r, g, b;
+    GetBorder(r, g, b);
+    long c = makecol(r, g, b);
+    if (borderSize == 1)
+    {
+      rect (screen, scaleX-1, scaleY-1, scaleX+scaleW, scaleY+scaleW, c);
+    }
+    else if(borderSize > 1)
+    {
+      rectfill (screen, scaleX-borderSize, scaleY-borderSize, scaleX+scaleW+borderSize-1, scaleY-1, c);
+      rectfill (screen, scaleX-borderSize, scaleY, scaleX-1, scaleY+scaleH-1, c);
+      rectfill (screen, scaleX+scaleW, scaleY, scaleX+scaleW+borderSize-1, scaleY+scaleH-1, c);
+      rectfill (screen, scaleX-borderSize, scaleY+scaleH, scaleX+scaleW+borderSize-1, scaleY+scaleH+borderSize, c);
+    }
   }
   else
     blit (buffer, screen, 0, 0, 0, 0, buffer->w, buffer->h);
