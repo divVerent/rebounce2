@@ -244,6 +244,8 @@ namespace Objects
             y = xy.second - h/2;
 	    _x = x << 8;
 	    _y = y << 8;
+	    dx = 0;
+	    dy = 0;
 	    world->PlaySound (this, "respawn.wav", 128, 1);
             return 1;
           }
