@@ -22,6 +22,7 @@ namespace Objects
    *                                                                        *
    **************************************************************************/
 
+  int const SPR_EXTRALIFE = 46;
   int const SPR_BOMBS = 56;
   int const SPR_RADIUS = 57;
   int const SPR_TIME = 58;
@@ -237,8 +238,11 @@ namespace Objects
             sprnum = savesprnum;
             std::pair<int, int> xy = lives.back();
 	    lives.pop_back();
-            x = xy.first;
-            y = xy.second;
+            x = xy.first - w/2;
+            y = xy.second - h/2;
+	    _x = x << 8;
+	    _y = y << 8;
+	    world->PlaySound (this, "respawn.wav", 128, 1);
             return 1;
           }
 	  world->PlaySound (this, "gelost.wav", 128, 1);
@@ -291,6 +295,16 @@ namespace Objects
       {
 	clear_to_color (my_hud, makecol (0, 0, 255));
 
+	// 32px: bombs
+	// 16px: spacer
+	// 32px: radius
+	// 16px: spacer
+	// 112px: time
+	// 16px: spacer
+	// 32px: lives
+	// 16px: spacer
+	// 48px: energy
+
 	// display the bombs
 	if (maxbombs)
 	{
@@ -309,17 +323,25 @@ namespace Objects
 	if (world->timelimit)
 	{
 	  ::Sprite::Sprites[0][SPR_TIME].draw (my_hud, 96, (HUD - SPRHEIGHT) / 2);
-	  for (int i = 1; i <= 50; ++i)
+	  for (int i = 1; i <= 48; ++i)
 	  {
-	    vline (my_hud, 112 + i * 2 - 1, 1, HUD-2, makecol (0, (world->itimer * 50 <= world->timelimit * (50-i)) ? 255 : 0, 0));
+	    vline (my_hud, 112 + i * 2 - 1, 1, HUD-2, makecol (0, (world->itimer * 48 <= world->timelimit * (48-i)) ? 255 : 0, 0));
+	  }
+	}
+	if (!lives.empty())
+	{
+	  ::Sprite::Sprites[0][SPR_EXTRALIFE].draw (my_hud, 224, (HUD - SPRHEIGHT) / 2);
+	  for (int i = 1; i <= 8; ++i)
+	  {
+	    vline (my_hud, 240 + i * 2 - 1, 1, HUD-2, makecol (0, (lives.size() >= i) ? 255 : 0, 0));
 	  }
 	}
 	if (maxenergy)
 	{
-	  ::Sprite::Sprites[0][SPR_ENERGY].draw (my_hud, 224, (HUD - SPRHEIGHT) / 2);
-	  for (int i = 1; i <= 34; ++i)
+	  ::Sprite::Sprites[0][SPR_ENERGY].draw (my_hud, 272, (HUD - SPRHEIGHT) / 2);
+	  for (int i = 1; i <= 16; ++i)
 	  {
-	    vline (my_hud, 240 + i * 2 - 1, 1, HUD-2, makecol (0, (energy * 35 > maxenergy * i) ? 255 : 0, 0));
+	    vline (my_hud, 288 + i * 2 - 1, 1, HUD-2, makecol (0, (energy * 35 > maxenergy * i) ? 255 : 0, 0));
 	  }
 	}
       }
