@@ -4,6 +4,7 @@
 #include "entity.h"
 #include "io.h"
 #include "world.h"
+#include "border.h"
 
 bool play (bitmap buf, std::string &LvlName, int &time_left, int &time_factor, float game_speed, bool CheatActivated = 0, bool MarkCheater = 0, bool AutoScreenshot = 0)
 {
@@ -52,18 +53,48 @@ bool play (bitmap buf, std::string &LvlName, int &time_left, int &time_factor, f
     int frametime = 0;
     int fps = 0;
     bool profile = 0;
+    bool pausekey = 0;
+    bool pause = 0;
+    int pause_r = 0, pause_g = 0, pause_b = 0;
 
     INIT_PROFILE ();
     BEGIN_PROFILE ("tick");
-    while (world->tick(screen, FRAMERATE, game_speed) ||
-        ((deathtimer ? deathtimer : (deathtimer = world->timer)) >= world->timer - 1000))
+    for(;;)
     {
+      if(!pause)
+      {
+        if(!world->tick(screen, FRAMERATE, game_speed))
+          if((deathtimer ? deathtimer : (deathtimer = world->timer)) < world->timer - 1000)
+            break;
+      }
       END_PROFILE ();
 
       BEGIN_PROFILE ("input");
       poll_keyboard ();
-      World::update_keys (key, keys_old, keys_changes);
-      world->update_keys (keys_changes);
+
+      if(key[KEY_P] && !world->multiplayer)
+      {
+        if(!pausekey)
+        {
+          pause = !pause;
+          if(pause)
+          {
+            GetBorder(pause_r, pause_g, pause_b);
+            Border(255, 255, 0);
+          }
+          else
+            Border(pause_r, pause_g, pause_b);
+        }
+        pausekey = 1;
+      }
+      else
+        pausekey = 0;
+
+      if(!pause)
+      {
+        World::update_keys (key, keys_old, keys_changes);
+        world->update_keys (keys_changes);
+      }
       END_PROFILE ();
 
       BEGIN_PROFILE ("idle");
@@ -76,6 +107,9 @@ bool play (bitmap buf, std::string &LvlName, int &time_left, int &time_factor, f
         BEGIN_PROFILE ("world -> buf");
         world->drawall(screen);
         END_PROFILE ();
+
+        if(pause)
+          textout_centre_border_ex(buf, font, "PAUSE", SCRWIDTH / 2, SCRHEIGHT / 2 - 4, makecol(255, 255, 0), makecol(0, 0, 0));
 
         ADD_PROFILE_DATA ("*fps", fps);
         ADD_PROFILE_DATA ("no. of entities", world->CountObjects());

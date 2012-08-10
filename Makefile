@@ -119,7 +119,7 @@ upx: upxgame
 editor-def.o:
 	$(CXX) -c defs.cpp -DEDITOR $(CPPFLAGS) $(CXXFLAGS) -o editor-def.o
 
-objects_editor = editor-def.o editor.o dialogs.o io.o map.o milli.o sound.o sprite.o
+objects_editor = editor-def.o editor.o dialogs.o io.o map.o milli.o sound.o sprite.o border.o
 editor: $(objects_editor)
 	$(CXX) $(objects_editor) -o editor$(EXEC_SUFFIX) $(LDFLAGS)
 

@@ -415,15 +415,7 @@ void TextOut (bitmap buf, int x, int y, const std::string& _s)
   y -= text_height (font) / 2;
   long bg = selected ? makecol (255, 128, 128) : makecol (0, 0, 0);
   long fg = selected ? makecol (0, 0, 0) : makecol (255, 255, 0);
-  textout_centre_ex (buf, font, s.c_str(), x+1, y+1, bg, -1);
-  textout_centre_ex (buf, font, s.c_str(), x+1, y-1, bg, -1);
-  textout_centre_ex (buf, font, s.c_str(), x-1, y+1, bg, -1);
-  textout_centre_ex (buf, font, s.c_str(), x-1, y-1, bg, -1);
-  textout_centre_ex (buf, font, s.c_str(), x, y+1, bg, -1);
-  textout_centre_ex (buf, font, s.c_str(), x, y-1, bg, -1);
-  textout_centre_ex (buf, font, s.c_str(), x-1, y, bg, -1);
-  textout_centre_ex (buf, font, s.c_str(), x+1, y, bg, -1);
-  textout_centre_ex (buf, font, s.c_str(), x, y, fg, -1);
+  textout_centre_border_ex (buf, font, s.c_str(), x+1, y+1, fg, bg);
 }
 #include <stdarg.h>
 std::vector <std::string> MakeVector (const char *p ...)
@@ -997,7 +989,7 @@ int main(int argc, char **argv)
     clear (screen);
     buf = create_optimized_bitmap (SCRWIDTH, SCRHEIGHT);
     clear (buf);
-    TextOut (buf, SCRWIDTH / 2, SCRHEIGHT / 2, "loading...");
+    TextOut (buf, SCRWIDTH / 2, SCRHEIGHT / 2 - 4, "loading...");
     update_screen (buf);
 
     ReadHints ();

@@ -110,6 +110,19 @@ int Random (int n)
   return rand() % n;
 }
 
+void textout_centre_border_ex(bitmap buf, FONT *font, const char *s, int x, int y, int fg, int bg)
+{
+  textout_centre_ex (buf, font, s, x+1, y+1, bg, -1);
+  textout_centre_ex (buf, font, s, x+1, y-1, bg, -1);
+  textout_centre_ex (buf, font, s, x-1, y+1, bg, -1);
+  textout_centre_ex (buf, font, s, x-1, y-1, bg, -1);
+  textout_centre_ex (buf, font, s, x, y+1, bg, -1);
+  textout_centre_ex (buf, font, s, x, y-1, bg, -1);
+  textout_centre_ex (buf, font, s, x-1, y, bg, -1);
+  textout_centre_ex (buf, font, s, x+1, y, bg, -1);
+  textout_centre_ex (buf, font, s, x, y, fg, -1);
+}
+
 
 int const FADE_SPEED = 16;
 
@@ -538,11 +551,7 @@ void VIEW_PROFILE (bitmap bmp)
   for (map<std::string, int>::iterator i = profile2_data.begin(); i != profile2_data.end(); ++i, y += dy)
   {
     const char *s = (i->first + ": " + int2str((i->first[0] == '*') ? i->second : 1000 * i->second / sum)).c_str();
-    textout_centre (bmp, font, s, bmp->w / 2, y + 1, makecol (0, 0, 0));
-    textout_centre (bmp, font, s, bmp->w / 2 + 1, y, makecol (0, 0, 0));
-    textout_centre (bmp, font, s, bmp->w / 2 - 1, y, makecol (0, 0, 0));
-    textout_centre (bmp, font, s, bmp->w / 2, y - 1, makecol (0, 0, 0));
-    textout_centre (bmp, font, s, bmp->w / 2, y, makecol (255, 255, 255));
+    textout_border_ex (bmp, font, s, bmp->w / 2, y, makecol (255, 255, 255), makecol(0, 0, 0), -1);
   }
   last = milliseconds;
 }

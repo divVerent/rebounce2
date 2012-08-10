@@ -38,6 +38,8 @@ extern int MAXHEIGHT;
 
 extern std::string startlevel;
 
+void textout_centre_border_ex(bitmap buf, FONT *font, const char *s, int x, int y, int fg, int bg);
+
 bitmap create_optimized_bitmap (int w, int h);
 void free_optimized_bitmap (bitmap bmp);
 void check_bitmap_memory ();

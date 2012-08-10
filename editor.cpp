@@ -214,15 +214,7 @@ void draw_entities (bitmap screen, IO::IOEntityContainer &cont, int scrx, int sc
       int x = list[i]->x+list[i]->w/2-scrx;
       int y = list[i]->y+list[i]->h-scry;
       int col0 = makecol(0,0,0);
-      textout_centre_ex(screen, font, info.c_str(), x+1, y+1, col0, -1);
-      textout_centre_ex(screen, font, info.c_str(), x+1, y-1, col0, -1);
-      textout_centre_ex(screen, font, info.c_str(), x-1, y+1, col0, -1);
-      textout_centre_ex(screen, font, info.c_str(), x-1, y-1, col0, -1);
-      textout_centre_ex(screen, font, info.c_str(), x, y+1, col0, -1);
-      textout_centre_ex(screen, font, info.c_str(), x, y-1, col0, -1);
-      textout_centre_ex(screen, font, info.c_str(), x-1, y, col0, -1);
-      textout_centre_ex(screen, font, info.c_str(), x+1, y, col0, -1);
-      textout_centre_ex(screen, font, info.c_str(), x, y, col, -1);
+      textout_centre_border_ex(screen, font, info.c_str(), x, y, col, col0);
     }
   }
 }
