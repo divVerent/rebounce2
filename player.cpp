@@ -234,7 +234,6 @@ namespace Objects
             world->Register (this, ::World::_world::DISABLED, 0);
             world->Register (this, ::World::_world::KILLABLE, 1);
             world->iendtimer = 0;
-            world->StopMusic ();
             Border (0, 255, 0);
             loser = 0;
             sprnum = savesprnum;
