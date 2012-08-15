@@ -661,14 +661,14 @@ bool graphics_init (bool UseColor24, int EnableFullscreen)
       dh = SCREEN_H - 2 * borderSize;
 
       doScale = true;
-      if(w * SCREEN_H > h * SCREEN_W)
+      if(w * dh > h * dw)
       {
-        scaleW = (SCREEN_W / w) * w;
+        scaleW = (dw / w) * w;
         scaleH = (scaleW * h) / w;
       }
       else
       {
-        scaleH = (SCREEN_H / h) * h;
+        scaleH = (dh / h) * h;
         scaleW = (scaleH * w) / h;
       }
       scaleX = (dw - scaleW) / 2 + borderSize;
