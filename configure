@@ -118,7 +118,8 @@ if ($HOST eq $TARGET)
 {
   $LIBALLEG = `allegro-config --shared`;
   $CALLEG = `allegro-config --cflags` . ' ' . `allegro-config --cppflags`;
-  ($LIBALLEG, $CALLEG) =~ s/\n/ /g;
+  $LIBALLEG =~ s/\n/ /g;
+  $CALLEG =~ s/\n/ /g;
 }
 
 my $LDFLAGS = ($ENV{LDFLAGS} || "");
