@@ -93,7 +93,7 @@ patches.dat: default.cfg *.mid
 	pat2dat patches.dat default.cfg *.mid
 
 # DOES NOT WORK (needs patches.dat anyway)
-#dist: game
+#dist: game patches.dat
 #	rm -rf dist/rebounce2-$(OS)-standalone* || true
 #	mkdir dist || true
 #	mkdir dist/rebounce2-$(OS)-standalone || true
@@ -104,7 +104,7 @@ patches.dat: default.cfg *.mid
 #	cd dist/rebounce2-$(OS)-standalone; $(ZIPPER) ../rebounce2-$(OS)-standalone-withpatches.$(ZIPEXT) *
 
 VERSION := $(shell grep VERSION main.cpp | head -n 1 | cut -d '"' -f 2)
-datdist: datgame
+datdist: datgame patches.dat
 	rm -rf dist/rebounce2-$(VERSION)-$(OS)* || true
 	mkdir dist || true
 	mkdir dist/rebounce2-$(OS) || true
