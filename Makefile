@@ -55,19 +55,19 @@ inexe.o: $(def)
 .PHONY: tags
 tags:
 	-ctags -I OBJECT=class,EXTEND=class *.cpp *.h || rm -f tags
-	
+
 .PHONY: debuggame
 debuggame: tags $(objects_manyfiles)
-	$(CXX) $(objects_manyfiles) -o rebounce2$(EXEC_SUFFIX) $(LDFLAGS) 
+	$(CXX) $(objects_manyfiles) -o rebounce2$(EXEC_SUFFIX) $(LDFLAGS)
 
 .PHONY: datgame
 datgame: tags rebounce2.dat $(objects_twofiles)
-	$(CXX) $(objects_twofiles) -o rebounce2$(EXEC_SUFFIX) $(LDFLAGS) 
+	$(CXX) $(objects_twofiles) -o rebounce2$(EXEC_SUFFIX) $(LDFLAGS)
 
 # DOES NOT WORK (needs patches.dat anyway)
 #.PHONY: game
 #game: tags rebounce2.dat $(objects_allinone)
-#	$(CXX) $(objects_allinone) -o rebounce2$(EXEC_SUFFIX) $(LDFLAGS) 
+#	$(CXX) $(objects_allinone) -o rebounce2$(EXEC_SUFFIX) $(LDFLAGS)
 #	exedat -ac rebounce2$(EXEC_SUFFIX) rebounce2.dat
 
 .PHONY: clean
@@ -97,6 +97,7 @@ patches.dat: default.cfg *.mid
 #	rm -rf dist/rebounce2-$(OS)-standalone* || true
 #	mkdir dist || true
 #	mkdir dist/rebounce2-$(OS)-standalone || true
+#	cp README COPYING.GPL2 COPYRIGHT.txt dist/rebounce2-$(OS)
 #	cp rebounce2$(EXEC_SUFFIX) dist/rebounce2-$(OS)-standalone
 #	cp dll/$(OS)/* dist/rebounce2-$(OS)-standalone || true
 #	cp patches.dat dist/rebounce2-$(OS)-standalone
@@ -107,6 +108,7 @@ datdist: datgame
 	rm -rf dist/rebounce2-$(VERSION)-$(OS)* || true
 	mkdir dist || true
 	mkdir dist/rebounce2-$(OS) || true
+	cp README COPYING.GPL2 COPYRIGHT.txt dist/rebounce2-$(OS)
 	cp rebounce2$(EXEC_SUFFIX) dist/rebounce2-$(OS)
 	cp rebounce2.dat dist/rebounce2-$(OS)
 	cp dll/$(OS)/* dist/rebounce2-$(OS) || true

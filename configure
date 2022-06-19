@@ -25,12 +25,12 @@ for (@ARGV)
  $DOCLEAN = 0
   if (/^--no-clean$/i);
  do
- { 
+ {
   $CROSS = $1;
   $FLAGS .= "CXX = $CROSS-g++\n";
- } 
+ }
   if (/^--cross=(.*)$/i);
- $FLAGS .= "$1 = $2\n"
+ $FLAGS .= "$1 += $2\n"
   if (/^--make-(.*?)=(.*)$/i);
  die <<END if (/^--help$/i);
 $0 usage:
