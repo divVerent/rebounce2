@@ -8,7 +8,7 @@
 #include "milli.h"
 #include "border.h"
 
-// #define PROFILE
+#define PROFILE
 // #define ALLINONE
 // #define INEXE
 // #define USE_VIDEO_BITMAPS
@@ -501,15 +501,15 @@ void check_bitmap_memory ()
 
 namespace
 {
-  map <std::string, int> profile_data;
-  map <std::string, int> profile2_data;
-  stack <std::string> current;
+  std::map <std::string, int> profile_data;
+  std::map <std::string, int> profile2_data;
+  std::stack <std::string> current;
   int last;
   bool ok = 0;
 }
 void INIT_PROFILE ()
 {
-  current = stack<std::string>();
+  current = std::stack<std::string>();
   current.push ("GLOBAL");
   profile_data.erase (profile_data.begin(), profile_data.end());
   last = milliseconds;
@@ -543,15 +543,15 @@ void VIEW_PROFILE (bitmap bmp)
   int lasty = dy * profile2_data.size();
   int y = (bmp->h - lasty) / 2;
   int sum = 0;
-  for (map<std::string, int>::iterator i = profile2_data.begin(); i != profile2_data.end(); ++i)
+  for (std::map<std::string, int>::iterator i = profile2_data.begin(); i != profile2_data.end(); ++i)
     if (i->first[0] != '*')
       sum += i->second;
   if (!sum)
     sum = 1;
-  for (map<std::string, int>::iterator i = profile2_data.begin(); i != profile2_data.end(); ++i, y += dy)
+  for (std::map<std::string, int>::iterator i = profile2_data.begin(); i != profile2_data.end(); ++i, y += dy)
   {
-    const char *s = (i->first + ": " + int2str((i->first[0] == '*') ? i->second : 1000 * i->second / sum)).c_str();
-    textout_border_ex (bmp, font, s, bmp->w / 2, y, makecol (255, 255, 255), makecol(0, 0, 0), -1);
+    std::string s = (i->first + ": " + int2str((i->first[0] == '*') ? i->second : 1000 * i->second / sum));
+    textout_centre_border_ex (bmp, font, s.c_str(), bmp->w / 2, y, makecol (255, 255, 255), makecol(0, 0, 0));
   }
   last = milliseconds;
 }
@@ -568,7 +568,7 @@ void RESET_PROFILE ()
 {
   if (!ok) return;
   profile2_data = profile_data;
-  current = stack<std::string>();
+  current = std::stack<std::string>();
   current.push ("GLOBAL");
   profile_data.erase (profile_data.begin(), profile_data.end());
   last = milliseconds;
@@ -784,17 +784,12 @@ void update_screen (bitmap buffer)
   acquire_bitmap (screen);
   if(doScale)
   {
-    blit (buffer, savescreen, 0, 0, 0, 0, buffer->w, buffer->h);
     stretch_blit (buffer, screen, 0, 0, buffer->w, buffer->h, scaleX, scaleY, scaleW, scaleH);
-    int r, g, b;
-    GetBorder(r, g, b);
-    long c = makecol(r, g, b);
-    if (borderSize == 1)
+    if(borderSize != 0)
     {
-      rect (screen, scaleX-1, scaleY-1, scaleX+scaleW, scaleY+scaleW, c);
-    }
-    else if(borderSize > 1)
-    {
+      int r, g, b;
+      GetBorder(r, g, b);
+      long c = makecol(r, g, b);
       rectfill (screen, scaleX-borderSize, scaleY-borderSize, scaleX+scaleW+borderSize-1, scaleY-1, c);
       rectfill (screen, scaleX-borderSize, scaleY, scaleX-1, scaleY+scaleH-1, c);
       rectfill (screen, scaleX+scaleW, scaleY, scaleX+scaleW+borderSize-1, scaleY+scaleH-1, c);
