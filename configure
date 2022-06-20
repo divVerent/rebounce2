@@ -78,8 +78,10 @@ if ($TARGET eq 'win32')
 if ($TARGET eq 'linux')
 {
  Out "EXEC_PREFIX = ";
- Out "ZIPPER = tar czf";
- Out "ZIPEXT = tar.gz";
+ #Out "ZIPPER = tar czf";
+ #Out "ZIPEXT = tar.gz";
+ Out "ZIPPER = zip -9";
+ Out "ZIPEXT = zip";
 }
 
 if ($HOST eq 'dos')
