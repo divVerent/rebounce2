@@ -58,7 +58,7 @@ int SCRHEIGHT = 200;
 int SCRHEIGHT = 240;
 #endif
 
-int FRAMERATE = 40;
+int FRAMERATE = 60;
 int SOUND_LIMIT = 8;
 int MAXWIDTH = 64;
 int MAXHEIGHT = 64;
