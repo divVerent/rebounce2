@@ -781,6 +781,7 @@ void update_screen (bitmap buffer)
     vsync();
     END_PROFILE ();
   }
+  blit (buffer, savescreen, 0, 0, 0, 0, buffer->w, buffer->h);
   acquire_bitmap (screen);
   if(doScale)
   {
