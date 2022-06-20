@@ -136,4 +136,4 @@ alldist: clean
 	make datdist -j$$(nproc)
 	CXXFLAGS=-I$(HOME)/Downloads/allegro-mingw-4.2.3/include LDFLAGS=-L$(HOME)/Downloads/allegro-mingw-4.2.3/lib ./configure --cross=i686-w64-mingw32 --target=win32
 	make datdist -j$$(nproc)
-	zipmerge dist/rebounce-$(VERSION).$(ZIPEXT) dist/rebounce-$(VERSION)-*.$(ZIPEXT)
+	zipmerge dist/rebounce2-$(VERSION).$(ZIPEXT) dist/rebounce2-$(VERSION)-*.$(ZIPEXT)
