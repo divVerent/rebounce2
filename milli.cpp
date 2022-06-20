@@ -35,27 +35,10 @@ int Timer::synchronize (int framerate, bool video, bool clear)
     last = milliseconds;
 
   int next = last + 1000 / framerate;
-
-  if (milliseconds > next + 200)
-  {
-    next = milliseconds + 1;
+  int delta = next - milliseconds;
+  if (delta > 0) {
+    rest(delta);
   }
-
-  if (milliseconds > next)
-  {
-    last = next;
-    return 0;
-  }
-
-  while (milliseconds < next - 20);
-  if (video)
-  {
-    vsync ();
-    _did_vsync = 1;
-  }
-  else
-    while (milliseconds < next);
-
   last = next;
 
   return 1;
