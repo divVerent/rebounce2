@@ -95,6 +95,14 @@ namespace Objects
 	radius = 8;
 	maxbombs = 0;
 	my_hud = world->get_hud (num);
+
+	// Outer pixel row is just border.
+	offsetx -= 1;
+	offsety -= 1;
+	w -= 2;
+	h -= 2;
+	x += 1 << 8;
+	y += 1 << 8;
       }
 
     ~Player ()

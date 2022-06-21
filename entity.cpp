@@ -11,6 +11,8 @@ nsEntity::Entity::Entity (ConfigMap &m, Entity *e) : world(dynamic_cast<World::_
   initialize_int (y);
   _x = x << 8;
   _y = y << 8;
+  initialize_int (offsetx);
+  initialize_int (offsety);
   initialize_int (dx) << 8;
   initialize_int (dy) << 8;
   initialize_int (ddx) << 8;

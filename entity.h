@@ -50,6 +50,7 @@ namespace nsEntity
     // may only be set by world, so no description here
     ::World::_world *world;
     int x, y;
+    int offsetx, offsety;
     int w, h;
     int nextthink;
     std::string targetname;
@@ -60,8 +61,8 @@ namespace nsEntity
 
     inline void draw (bitmap buffer, int scrollx, int scrolly)
     {
-      int newx = x - scrollx;
-      int newy = y - scrolly;
+      int newx = x - scrollx + offsetx;
+      int newy = y - scrolly + offsety;
       if (sprnum >= 0)
 	::Sprite::Sprites[groupnum][sprnum].draw (buffer, newx, newy);
       else if (mysprite)
