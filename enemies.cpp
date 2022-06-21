@@ -89,11 +89,10 @@ namespace Objects
 	return;
       if (!(Victim->flags & ::World::_world::KILLABLE))
 	return;
-      // FIXME: actually calculate circle-intersects-ellipse here.
-      // I.e. "does the bounding ellipse of Victim contain any point closer than radius".
+      // Approximate ellipse-circle collision.
       int XDiff = me->x + me->w / 2 - Victim->x - Victim->w / 2;
       int YDiff = me->y + me->h / 2 - Victim->y - Victim->h / 2;
-      if (hypot (XDiff, YDiff) < me->radius + hypot (Victim->w, Victim->h))
+      if (hypot (XDiff, YDiff) < me->radius + std::min (Victim->w, Victim->h) / 2)
 	Victim->Homicide ();
     }
     bool HandleInput (int key, bool pressed)
