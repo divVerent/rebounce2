@@ -146,7 +146,7 @@ namespace Objects
 	if (start)
 	  world->PlaySound (this, "expl.wav", 128, 1);
 
-	world->Action (this, KillIt, x, y, w, h);
+	world->ActionBox (this, KillIt, x, y, w, h);
       }
 
       start = 0;

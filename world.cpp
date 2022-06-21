@@ -99,7 +99,7 @@ void World::_world::drawall (bitmap screen)
   x = _map->scrxpos;
   y = _map->scrypos;
   _map->draw (screen);
-  Collision::for_each (*_zlist, drawer (screen, x, y), x, y, screen->w, screen->h);
+  Collision::for_each_box (*_zlist, drawer (screen, x, y), x, y, screen->w, screen->h);
 }
 
 class World::_world::Ticker
@@ -331,17 +331,16 @@ void World::_world::Action (nsEntity::Entity *Actor, int Act, int x, int y, int 
   switch (Act)
   {
    case EXIT:
-    Collision::for_each_sorted (*_ent, Exit, x, y, w, h);
+    Collision::for_each_box_sorted (*_ent, Exit, x, y, w, h);
     break;
    case KILL:
-    // FIXME use victim ellipse instead of box for killing?
-    Collision::for_each_sorted (*_ent, Kill, x, y, w, h);
+    Collision::for_each_ellipse_sorted (*_ent, Kill, x, y, w, h);
     break;
    case SWITCH:
-    Collision::for_each_sorted (*_ent, Toggle, x, y, w, h);
+    Collision::for_each_box_sorted (*_ent, Toggle, x, y, w, h);
     break;
    case FIND:
-    Collision::for_each_sorted (*_ent, Find, x, y, w, h);
+    Collision::for_each_box_sorted (*_ent, Find, x, y, w, h);
     break;
   }
 }
@@ -366,9 +365,9 @@ namespace
   typedef ActionAdaptor <Ent, void (*) (Ent *, Ent *)> Adaptor;
 }
 
-void World::_world::Action (nsEntity::Entity *Actor, void (*what) (nsEntity::Entity *ActionEnt, nsEntity::Entity *FoundEnt), int x, int y, int w, int h)
+void World::_world::ActionBox (nsEntity::Entity *Actor, void (*what) (nsEntity::Entity *ActionEnt, nsEntity::Entity *FoundEnt), int x, int y, int w, int h)
 {
-  Collision::for_each_sorted (*_ent, Adaptor (Actor, what), x, y, w, h);
+  Collision::for_each_box_sorted (*_ent, Adaptor (Actor, what), x, y, w, h);
 }
 
 

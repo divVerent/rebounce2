@@ -104,7 +104,7 @@ namespace Objects
     }
     int think ()
     {
-      world->Action (this, MoveIt, x, y, w, h);
+      world->ActionBox (this, MoveIt, x, y, w, h);
       nextthink = delta;
       return 0;
     }

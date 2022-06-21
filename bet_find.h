@@ -2,6 +2,7 @@
 #define __RP__BETTER_FIND_H__
 
 #include "entity.h"
+#include "coll.h"
 
 namespace Collision
 {
@@ -14,7 +15,7 @@ namespace Collision
     return e1->x < e2->x;
   }
 
-  template <class C, class F> void for_each_sorted (const C& cont, F f, int x, int y, int w, int h)
+  template <class C, class F> void for_each_box_sorted (const C& cont, F f, int x, int y, int w, int h)
   {
     typedef typename C::const_iterator CI;
     static nsEntity::ConfigMap m;
@@ -26,6 +27,20 @@ namespace Collision
     CI end = std::upper_bound (cont.begin(), cont.end(), &e2, EntityCompare);
     for (CI p = begin; p != end; ++p)
       if (check_box_coll (x, y, w, h, (*p)->x, (*p)->y, (*p)->w, (*p)->h))
+	f (*p);
+  }
+  template <class C, class F> void for_each_ellipse_sorted (const C& cont, F f, int x, int y, int w, int h)
+  {
+    typedef typename C::const_iterator CI;
+    static nsEntity::ConfigMap m;
+    static nsEntity::Entity e1(m);
+    static nsEntity::Entity e2(m);
+    e1.x = x - MAXWIDTH;
+    e2.x = x + w + MAXWIDTH;
+    CI begin = std::lower_bound (cont.begin(), cont.end(), &e1, EntityCompare);
+    CI end = std::upper_bound (cont.begin(), cont.end(), &e2, EntityCompare);
+    for (CI p = begin; p != end; ++p)
+      if (check_ellipse_coll (x, y, w, h, (*p)->x, (*p)->y, (*p)->w, (*p)->h))
 	f (*p);
   }
 

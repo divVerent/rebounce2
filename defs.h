@@ -75,6 +75,7 @@ void fade_screen (bitmap buffer);
 
 enum { NONE = 0, COLLIDES = 1, DEADLY = 2, SWITCHABLE = 4, FLOOR = 256, AIR = 512 };
 // DO NOT USE FLOOR
+// NOTE: the DEADLY flag is evaluated against object _ellipse_, not _box_.
 
 
 int Random (int n);

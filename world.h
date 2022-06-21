@@ -35,7 +35,7 @@ namespace World
     std::string mapname;
     keymap changes;
     friend class ::World::_world::Ticker;
-    static void Kill (nsEntity::Entity *); 
+    static void Kill (nsEntity::Entity *);
     static void Exit (nsEntity::Entity *);
     static void Find (nsEntity::Entity *);
     static void Toggle (nsEntity::Entity *);
@@ -95,7 +95,7 @@ namespace World
 
     int ParseAction (const  std::string &action);
     void Action (nsEntity::Entity *Actor, int Act, int x, int y, int w, int h, int Only_Players = 0);
-    void Action (nsEntity::Entity *Actor, void (*what) (nsEntity::Entity *ActionEnt, nsEntity::Entity *FoundEnt), int x, int y, int w, int h);
+    void ActionBox (nsEntity::Entity *Actor, void (*what) (nsEntity::Entity *ActionEnt, nsEntity::Entity *FoundEnt), int x, int y, int w, int h);
 
     void kill_9 (nsEntity::Entity *ent);
     void kill (nsEntity::Entity *ent);

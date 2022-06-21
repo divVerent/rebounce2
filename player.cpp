@@ -149,7 +149,7 @@ namespace Objects
 	if (pressed)
 	{
 	  toggled = 0;
-	  world->Action (this, Toggle, x, y, w, h);
+	  world->ActionBox (this, Toggle, x, y, w, h);
 	  if (!toggled)
 	  {
 	    if (numbombs)
@@ -392,7 +392,7 @@ namespace Objects
     }
     int think ()
     {
-      world->Action (this, doit, x, y, w, h);
+      world->ActionBox (this, doit, x, y, w, h);
       nextthink = 100;
       return 1;
     }

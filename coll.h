@@ -1,6 +1,8 @@
 #ifndef __RP__COLLSION_H__
 #define __RP__COLLSION_H__
 
+#include <math.h>
+
 #include "defs.h"
 #include <algorithm>
 #include "map.h"
@@ -31,6 +33,18 @@ namespace Collision
     // or they touch
     return 1;
   }
+  inline bool check_ellipse_coll (int x, int y, int w, int h, int x2, int y2, int w2, int h2) {
+    // TODO turn into integer math.
+    // Don't need the - 0.5 when the final comparison is < and all math is exact.
+    double dx0 = ((x    ) - (x2 + w2 / 2.0)) / (w2 / 2.0 - 0.5);
+    double dx1 = ((x + w) - (x2 + w2 / 2.0)) / (w2 / 2.0 - 0.5);
+    double dy0 = ((y    ) - (y2 + h2 / 2.0)) / (h2 / 2.0 - 0.5);
+    double dy1 = ((y + h) - (y2 + h2 / 2.0)) / (h2 / 2.0 - 0.5);
+    // Check if above rectangle contains the unit circle.
+    double nearestx = dx0 * dx1 < 0 ? 0 : abs(dx0) < abs(dx1) ? dx0 : dx1;
+    double nearesty = dy0 * dy1 < 0 ? 0 : abs(dy0) < abs(dy1) ? dy0 : dy1;
+    return hypot(nearestx, nearesty) <= 1;
+  }
   template <class C> class _iter_func
   {
     C iter;
@@ -48,16 +62,22 @@ namespace Collision
     return _iter_func<C>(iter);
   }
 
-  template <class C, class F> void for_each (const C& cont, F f, int x, int y, int w, int h)
+  template <class C, class F> void for_each_box (const C& cont, F f, int x, int y, int w, int h)
   {
     for (typename C::const_iterator p = cont.begin(); p != cont.end(); ++p)
       if (check_box_coll (x, y, w, h, (*p)->x, (*p)->y, (*p)->w, (*p)->h))
 	f (*p);
   }
+  template <class C, class F> void for_each_ellipse (const C& cont, F f, int x, int y, int w, int h)
+  {
+    for (typename C::const_iterator p = cont.begin(); p != cont.end(); ++p)
+      if (check_box_ellipse_coll (x, y, w, h, (*p)->x, (*p)->y, (*p)->w, (*p)->h))
+	f (*p);
+  }
   template <class C, class C2> void FindCollidingEntities (int x, int y, int w, int h, const C &in, C2 &out)
   {
     out.clear ();
-    for_each (in, iter_func(back_inserter(out)), x, y, w, h);
+    for_each_box (in, iter_func(back_inserter(out)), x, y, w, h);
   }
   template <class F> class ref_func
   {
