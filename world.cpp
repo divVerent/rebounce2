@@ -334,6 +334,7 @@ void World::_world::Action (nsEntity::Entity *Actor, int Act, int x, int y, int 
     Collision::for_each_sorted (*_ent, Exit, x, y, w, h);
     break;
    case KILL:
+    // FIXME use victim ellipse instead of box for killing?
     Collision::for_each_sorted (*_ent, Kill, x, y, w, h);
     break;
    case SWITCH:

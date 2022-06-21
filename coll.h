@@ -82,6 +82,7 @@ namespace Collision
     for (int yy = ym; yy <= y2m; ++yy)
       for (int xx = xm; xx <= x2m; ++xx)
 	flags |= current(xx, yy).flags;
+    // FIXME also provide deadly flag assuming elliptical x,y,w,h?
     return flags;
   }
 }
