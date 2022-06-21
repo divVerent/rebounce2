@@ -1040,7 +1040,7 @@ int main(int argc, char **argv)
           if (!Multiplayer::Multiplayer)
           {
             Eintragen (s2, b, timeleft * timefactor / 1000);
-            if (!NoHiscore)
+            if (!NoHiscore) {
               WriteSinglePlayerData ();
             }
           }
