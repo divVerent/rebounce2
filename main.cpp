@@ -18,7 +18,7 @@
 #include "keys.h"
 #include "animate.h"
 
-#define VERSION "2.4"
+#define VERSION "2.4.1"
 
 std::string Spielername = "*** N/A ***";
 std::string SpielerID = "1234567890";
@@ -1040,6 +1040,7 @@ int main(int argc, char **argv)
           if (!Multiplayer::Multiplayer)
           {
             Eintragen (s2, b, timeleft * timefactor / 1000);
+            WriteSinglePlayerData ();
           }
           else
           {
