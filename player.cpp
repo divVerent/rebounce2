@@ -101,8 +101,10 @@ namespace Objects
 	offsety -= 1;
 	w -= 2;
 	h -= 2;
-	x += 1 << 8;
-	y += 1 << 8;
+	x += 1;
+	y += 1;
+	_x += 1 << 8;
+	_y += 1 << 8;
       }
 
     ~Player ()
