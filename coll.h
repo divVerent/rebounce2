@@ -1,7 +1,7 @@
 #ifndef __RP__COLLSION_H__
 #define __RP__COLLSION_H__
 
-#include <math.h>
+#include <stdint.h>
 
 #include "defs.h"
 #include <algorithm>
@@ -33,17 +33,17 @@ namespace Collision
     // or they touch
     return 1;
   }
-  inline bool check_ellipse_coll (int x, int y, int w, int h, int x2, int y2, int w2, int h2) {
+  inline bool check_ellipse_coll (int64_t x, int64_t y, int64_t w, int64_t h, int64_t x2, int64_t y2, int64_t w2, int64_t h2) {
     // TODO turn into integer math.
     // Don't need the - 0.5 when the final comparison is < and all math is exact.
-    double dx0 = ((x    ) - (x2 + w2 / 2.0)) / (w2 / 2.0 - 0.5);
-    double dx1 = ((x + w) - (x2 + w2 / 2.0)) / (w2 / 2.0 - 0.5);
-    double dy0 = ((y    ) - (y2 + h2 / 2.0)) / (h2 / 2.0 - 0.5);
-    double dy1 = ((y + h) - (y2 + h2 / 2.0)) / (h2 / 2.0 - 0.5);
+    int64_t dx0 = (2 * (x    ) - (2 * x2 + w2)) * h2;
+    int64_t dx1 = (2 * (x + w) - (2 * x2 + w2)) * h2;
+    int64_t dy0 = (2 * (y    ) - (2 * y2 + h2)) * w2;
+    int64_t dy1 = (2 * (y + h) - (2 * y2 + h2)) * w2;
     // Check if above rectangle contains the unit circle.
-    double nearestx = dx0 * dx1 < 0 ? 0 : abs(dx0) < abs(dx1) ? dx0 : dx1;
-    double nearesty = dy0 * dy1 < 0 ? 0 : abs(dy0) < abs(dy1) ? dy0 : dy1;
-    return hypot(nearestx, nearesty) <= 1;
+    int64_t nearestx = dx0 * dx1 < 0 ? 0 : abs(dx0) < abs(dx1) ? dx0 : dx1;
+    int64_t nearesty = dy0 * dy1 < 0 ? 0 : abs(dy0) < abs(dy1) ? dy0 : dy1;
+    return nearestx * nearestx + nearesty * nearesty < w2 * w2 * h2 * h2;
   }
   template <class C> class _iter_func
   {
