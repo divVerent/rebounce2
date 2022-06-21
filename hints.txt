@@ -27,7 +27,7 @@ S - Did you know they also do blend?^secret1.txt
 21S
 the right way
 22S
-f(*ck)(you);
+void(*)(you);
 23S
 under water
 24S
