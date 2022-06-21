@@ -100,9 +100,15 @@ namespace Collision
     int xm, ym, x2m, y2m;
     get_map_range (x, y, w, h, SPRWIDTH, SPRHEIGHT, &xm, &ym, &x2m, &y2m);
     for (int yy = ym; yy <= y2m; ++yy)
-      for (int xx = xm; xx <= x2m; ++xx)
-	flags |= current(xx, yy).flags;
-    // FIXME also provide deadly flag assuming elliptical x,y,w,h?
+      for (int xx = xm; xx <= x2m; ++xx) {
+	int thisflags = current(xx, yy).flags;
+	if (thisflags & DEADLY) {
+	  if (!check_ellipse_coll(xx * SPRWIDTH, yy * SPRHEIGHT, SPRWIDTH, SPRHEIGHT, x, y, w, h)) {
+	    thisflags &= ~DEADLY;
+	  }
+	}
+	flags |= thisflags;
+      }
     return flags;
   }
 }
