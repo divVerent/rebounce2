@@ -58,7 +58,7 @@ namespace Objects
     int loser;
     typedef std::vector<std::pair<int, int> > lives_t;
     lives_t lives;
-    Player (nsEntity::ConfigMap &m, nsEntity::Entity *w) : Entity (m, w)
+    Player (nsEntity::ConfigMap &m, nsEntity::Entity *wld) : Entity (m, wld)
       , up(0), down(0), left(0), right(0), e(0), loser(0), savesprnum(sprnum)
       {
 	teleportable = 1;
