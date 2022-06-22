@@ -266,7 +266,7 @@ int main(int argc, char **argv)
 
   allegro_init ();
   install_keyboard ();
-  if (!graphics_init (1, 1))
+  if (!graphics_init (1, -1))
     return 0;
   install_mouse ();
   sound_init ();
