@@ -354,7 +354,7 @@ namespace Objects
 	  ::Sprite::Sprites[0][SPR_ENERGY].draw (my_hud, 272, (HUD - SPRHEIGHT) / 2);
 	  for (int i = 1; i <= 16; ++i)
 	  {
-	    vline (my_hud, 288 + i * 2 - 1, 1, HUD-2, makecol (0, (energy * 35 > maxenergy * i) ? 255 : 0, 0));
+	    vline (my_hud, 288 + i * 2 - 1, 1, HUD-2, makecol (0, (energy * 16 >= maxenergy * i) ? 255 : 0, 0));
 	  }
 	}
       }
