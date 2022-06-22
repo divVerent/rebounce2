@@ -266,7 +266,7 @@ int main(int argc, char **argv)
 
   allegro_init ();
   install_keyboard ();
-  if (!graphics_init (1, 0))
+  if (!graphics_init (1, 1))
     return 0;
   install_mouse ();
   sound_init ();
@@ -412,12 +412,12 @@ int main(int argc, char **argv)
 	    {
 	      m.set(x, y, current);
 	      current.sprnum = (current.sprnum + 1) % (Sprite::Sprites[current.groupnum].size());
-	    } 
+	    }
 	    for (int x = m.blockxpos; x >= m.selxpos; --x)
 	    {
 	      m.set(x, y, current);
 	      current.sprnum = (current.sprnum + 1) % (Sprite::Sprites[current.groupnum].size());
-	    } 
+	    }
 	  }
 	  for (int y = m.blockypos; y >= m.selypos; --y)
 	  {
@@ -425,14 +425,14 @@ int main(int argc, char **argv)
 	    {
 	      current.sprnum = (current.sprnum + 1) % (Sprite::Sprites[current.groupnum].size());
 	      m.set(x, y, current);
-	    } 
+	    }
 	    for (int x = m.blockxpos; x >= m.selxpos; --x)
 	    {
 	      current.sprnum = (current.sprnum + 1) % (Sprite::Sprites[current.groupnum].size());
 	      m.set(x, y, current);
-	    } 
+	    }
 	  }
-	  current = f5_cur;	
+	  current = f5_cur;
 	  break;
 	}
        case KEY_BACKSPACE:
