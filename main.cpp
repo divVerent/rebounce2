@@ -22,7 +22,6 @@
 
 std::string Spielername = "*** N/A ***";
 std::string SpielerID = "1234567890";
-std::string SpielerAddr = "nobody@nowhere.com";
 
 void TheEnd ();
 void Credits (int = 0);
@@ -163,26 +162,6 @@ void ReadSinglePlayerData ()
       break;
     }
 
-    for (;/*ever*/;)
-    {
-      SpielerAddr = Dialogs::ReadLn ("eMail adress (optional)", "");
-      if (SpielerAddr.find ("&") != std::string::npos)
-	continue;                                      // kein Name mit &
-      if (SpielerAddr.find ("=") != std::string::npos)
-	continue;                                      // kein Name mit =
-      if (SpielerAddr.find (":") != std::string::npos)
-	continue;                                      // kein Name mit :
-      if (SpielerAddr.find ("'") != std::string::npos)
-	continue;                                      // kein Name mit '
-      if (SpielerAddr.find ("\"") != std::string::npos)
-	continue;                                      // kein Name mit "
-      if (SpielerAddr.find ("<") != std::string::npos)
-	continue;                                      // kein Name mit <
-      if (SpielerAddr.find (">") != std::string::npos)
-	continue;                                      // kein Name mit >
-      break;
-    }
-
     return;
   }
 
@@ -192,13 +171,12 @@ void ReadSinglePlayerData ()
   char *p;
   if (!(p = strchr (buf1, ':')))
   {
-    SpielerAddr = "nobody@nowhere.com";
     Spielername = "Seme Hacker";
   }
   else
   {
     *p = 0;
-    SpielerAddr = p + 1;
+    // SpielerAddr = p + 1;
     Spielername = buf1;
   }
 
@@ -225,7 +203,7 @@ void WriteSinglePlayerData ()
   errno = 0;
 
   PACKFILE *f = pack_fopen ((SAVEPREFIX + "rebounce.sav").c_str(), F_WRITE_PACKED);
-  pack_fputs (std::string(Spielername + ":" + SpielerAddr).c_str(), f);
+  pack_fputs (std::string(Spielername + ":" /* + SpielerAddr */).c_str(), f);
   pack_fputs ("\n", f);
   pack_fputs (SpielerID.c_str(), f);
   pack_fputs ("\n", f);
@@ -236,7 +214,7 @@ void WriteSinglePlayerData ()
   fprintf (f2, "<NOSCRIPT>Please activate JavaScript to make this work!</NOSCRIPT>");
   fprintf (f2, "<INPUT TYPE=hidden NAME=uid VALUE=\"%s\">", SpielerID.c_str());
   fprintf (f2, "<INPUT TYPE=hidden NAME=name VALUE=\"%s\">", Spielername.c_str());
-  fprintf (f2, "<INPUT TYPE=hidden NAME=addr VALUE=\"%s\">", SpielerAddr.c_str());
+  // fprintf (f2, "<INPUT TYPE=hidden NAME=addr VALUE=\"%s\">", SpielerAddr.c_str());
   fprintf (f2, "<UL>");
   int nr = 0;
 
