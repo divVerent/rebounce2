@@ -161,38 +161,46 @@ bitmap buffer;
 void select_sprite (int &groupnum, int &sprnum)
 {
   bool quit = 0;
+  int groupnum1 = groupnum;
+  int sprnum1 = sprnum;
   while (!quit)
   {
     clear (buffer);
     // start at 0 to screenmax
     int x, sprnum2;
-    for ((sprnum2 = sprnum), (x = 0); x < buffer->w; (sprnum2 = (sprnum2 + 1) % Sprite::Sprites[groupnum].size()), (x += SPRWIDTH))
+    for ((sprnum2 = sprnum1), (x = 0); x < buffer->w; (sprnum2 = (sprnum2 + 1) % Sprite::Sprites[groupnum1].size()), (x += SPRWIDTH))
     {
-      Sprite::Sprites[groupnum][sprnum2].draw (buffer, x, 0);
+      Sprite::Sprites[groupnum1][sprnum2].draw (buffer, x, 0);
     }
     update_screen (buffer);
     switch (readkey() >> 8)
     {
      case KEY_RIGHT:
-      sprnum = (sprnum + 1) % (Sprite::Sprites[groupnum].size());
+      sprnum1 = (sprnum1 + 1) % (Sprite::Sprites[groupnum1].size());
       break;
      case KEY_LEFT:
-      sprnum = (sprnum + Sprite::Sprites[groupnum].size() - 1) % (Sprite::Sprites[groupnum].size());
+      sprnum1 = (sprnum1 + Sprite::Sprites[groupnum1].size() - 1) % (Sprite::Sprites[groupnum1].size());
       break;
      case KEY_ENTER:
      case KEY_SPACE:
       quit = 1;
+      groupnum = groupnum1;
+      sprnum = sprnum1;
+      break;
+     case KEY_ESCAPE:
+      quit = 1;
+      // But do not change.
       break;
      case KEY_DOWN:
-      ++groupnum;
-      if (Sprite::Sprites[groupnum].size() == 0)
-	groupnum = 0;
-      sprnum = 0;
+      ++groupnum1;
+      if (Sprite::Sprites[groupnum1].size() == 0)
+	groupnum1 = 0;
+      sprnum1 = 0;
       break;
      case KEY_UP:
-      if (groupnum)
-	--groupnum;
-      sprnum = 0;
+      if (groupnum1)
+	--groupnum1;
+      sprnum1 = 0;
       break;
     }
   }
@@ -208,8 +216,9 @@ void draw_entities (bitmap screen, IO::IOEntityContainer &cont, int scrx, int sc
     long col = list[i] == selected ? makecol (255, 255, 255) : makecol (128, 128, 128);
     rect (screen, list[i]->x-scrx, list[i]->y-scry, list[i]->x-scrx+list[i]->w-1, list[i]->y-scry+list[i]->h-1, col);
     std::string info;
+    info = list[i]->properties["type"];
     if(list[i]->properties.find("targetname") != list[i]->properties.end())
-      info = list[i]->properties["targetname"];
+      info = info + " " + list[i]->properties["targetname"];
     if(list[i]->properties.find("target") != list[i]->properties.end())
       info = info + "->" + list[i]->properties["target"];
     if(info != "")
@@ -551,6 +560,12 @@ int main(int argc, char **argv)
 	      quit = 1;
 	    }
 	  }
+	}
+	break;
+       case KEY_I:
+	if (selected_ent)
+	{
+	  select_sprite(selected_ent->groupnum, selected_ent->sprnum);
 	}
 	break;
        case KEY_O:
