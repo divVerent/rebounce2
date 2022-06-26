@@ -187,7 +187,7 @@ void select_sprite (int &groupnum, int &sprnum)
       groupnum = groupnum1;
       sprnum = sprnum1;
       break;
-     case KEY_ESCAPE:
+     case KEY_ESC:
       quit = 1;
       // But do not change.
       break;
