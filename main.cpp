@@ -19,6 +19,7 @@
 #include "animate.h"
 
 #define VERSION "2.6.0"
+#define NOHISCORE // Server is not there yet.
 
 std::string Spielername = "*** N/A ***";
 std::string SpielerID = "1234567890";

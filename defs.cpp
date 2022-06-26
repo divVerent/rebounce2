@@ -9,7 +9,6 @@
 #include "border.h"
 
 #define PROFILE
-#define NOHISCORE // Server is not there yet.
 // #define ALLINONE
 // #define INEXE
 // #define USE_VIDEO_BITMAPS
