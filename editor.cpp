@@ -112,6 +112,9 @@ void edit_properties (nsEntity::ConfigMap &m)
   for (;;)
   {
     int i = Dialogs::ListBox ("Eigenschaft", buf, current - buf);
+    if (i < 0) {
+      break;
+    }
     char *selected = buf[i];
     if (*selected == ' ')
     {

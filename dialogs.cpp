@@ -129,11 +129,14 @@ namespace
 int Dialogs::ListBox (std::string prompt, char **buf, int len)
 {
   listbox[1].dp = const_cast <char *> (prompt.c_str());
-  listbox[2].d1 = 1;
+  listbox[2].d1 = 0;
   listbox[3].dp = msg_ok;
   list = buf;
   centre_dialog (listbox);
   set_dialog_color (listbox, gui_fg_color, gui_bg_color);
-  popup_dialog (listbox, 2);
+  int ret = popup_dialog (listbox, 2);
+  if (ret < 0) {
+    return -1;
+  }
   return listbox[2].d1;
 }
