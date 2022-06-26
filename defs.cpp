@@ -50,6 +50,12 @@ DIGI_DRIVER_SB
 END_DIGI_DRIVER_LIST
 #endif
 
+#ifdef DJGPP
+# define MIDI_DRIVER MIDI_AUTODETECT
+#else
+# define MIDI_DRIVER MIDI_DIGMID
+#endif
+
 int SCRWIDTH = 320;
 
 #ifdef EDITOR
@@ -764,12 +770,12 @@ bool sound_init ()
   if(!EnableSound)
     return 1;
   reserve_voices (SOUND_LIMIT, 9);              // not more!
-  if (!install_sound (DIGI_AUTODETECT, MIDI_AUTODETECT, 0))
+  if (!install_sound (DIGI_AUTODETECT, MIDI_DRIVER, 0))
     return 1;
   reserve_voices (-1, -1);
-  return !install_sound (DIGI_AUTODETECT, MIDI_AUTODETECT, 0)
+  return !install_sound (DIGI_AUTODETECT, MIDI_DRIVER, 0)
     || !install_sound (DIGI_AUTODETECT, 0, 0)
-    || !install_sound (0, MIDI_AUTODETECT, 0)
+    || !install_sound (0, MIDI_DRIVER, 0)
     || ((EnableSound = 0));
 }
 
