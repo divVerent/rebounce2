@@ -18,7 +18,7 @@
 #include "keys.h"
 #include "animate.h"
 
-#define VERSION "2.5.1"
+#define VERSION "2.6.0"
 
 std::string Spielername = "*** N/A ***";
 std::string SpielerID = "1234567890";
@@ -883,6 +883,9 @@ void PreloadSounds ()
 void ScrollTextFile (std::string s);
 int main(int argc, char **argv)
 {
+#ifdef NOHISCORE
+  NoHiscore = 1;
+#endif
 #ifndef DONOTCATCH
   try
 #endif
