@@ -111,7 +111,7 @@ if ($HOST eq 'dos')
 my $LIBALLEG =
 {
   dos => '-lalleg',
-  win32 => '' # BY HAND
+  win32 => '', # BY HAND
   linux => '' # BY HAND
 }->{$TARGET};
 my $CALLEG = '';
