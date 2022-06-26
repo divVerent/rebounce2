@@ -883,9 +883,6 @@ void PreloadSounds ()
 void ScrollTextFile (std::string s);
 int main(int argc, char **argv)
 {
-#ifdef NOHISCORE
-  NoHiscore = 1;
-#endif
 #ifndef DONOTCATCH
   try
 #endif
@@ -1060,6 +1057,7 @@ int main(int argc, char **argv)
     if (!NoHiscore)
     {
       WriteSinglePlayerData ();
+#ifndef NOHISCORE
       Background (buf);
       DisplayMessage (buf, buf->w / 2, buf->h / 2, MakeVector
 	  (
@@ -1080,6 +1078,7 @@ int main(int argc, char **argv)
       if (c == 'Y')
 	ExitCode = 1;
       MenuClickSound ();
+#endif
     }
 
     clear (background_screen);
