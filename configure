@@ -86,14 +86,12 @@ if ($TARGET eq 'linux')
 
 if ($HOST eq 'dos')
 {
+ Out "HOSTDOS = 1";
 }
 
 if ($HOST eq 'win32')
 {
-}
-
-if ($HOST eq 'linux')
-{
+ Out "HOSTDOS = 1";
 }
 
 if ($HOST eq 'linux')

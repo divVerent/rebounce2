@@ -37,12 +37,15 @@ objects_allinone = $(objects) inexe.o
 include config.out
 include $(makefiles)
 
+config.out:
+	./configure
+
 %.mak: %.cpp
 	$(CXX) -MM $(CPPFLAGS) $< | perl sed.pl "s/$*\.o[ :]*/$*.o $*.inexe.o $*.usedat.o $@ : /g" > $*.temp
-ifdef HOSTUNIX
-	[ -s $*.temp ] && cp $*.temp $@ || $(RM) $@ || true
+ifdef HOSTDOS
+	copy $*.temp $@
 else
-	copy $*.temp $@ || true
+	[ -s $*.temp ] && cp $*.temp $@ || $(RM) $@
 endif
 	$(RM) $*.temp
 
