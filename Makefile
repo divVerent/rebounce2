@@ -40,9 +40,9 @@ include $(makefiles)
 %.mak: %.cpp
 	$(CXX) -MM $(CPPFLAGS) $< | perl sed.pl "s/$*\.o[ :]*/$*.o $*.inexe.o $*.usedat.o $@ : /g" > $*.temp
 ifdef HOSTUNIX
-	[ -s $*.temp ] && cp $*.temp $@ || $(RM) $@
+	[ -s $*.temp ] && cp $*.temp $@ || $(RM) $@ || true
 else
-	copy $*.temp $@
+	copy $*.temp $@ || true
 endif
 	$(RM) $*.temp
 
