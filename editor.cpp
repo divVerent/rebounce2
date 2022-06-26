@@ -391,68 +391,26 @@ int main(int argc, char **argv)
 	m.blockypos = m.selypos;
 	break;
        case KEY_ENTER:
-	for (int x = m.blockxpos; x <= m.selxpos; ++x)
-	{
-	  for (int y = m.blockypos; y <= m.selypos; ++y)
+	for (int y = std::min(m.blockypos, m.selypos); y <= std::max(m.blockypos, m.selypos); ++y)
+	  for (int x = std::min(m.blockxpos, m.selxpos); x <= std::max(m.blockxpos, m.selxpos); ++x)
 	    m.set(x, y, current);
-	  for (int y = m.blockypos; y >= m.selypos; --y)
-	    m.set(x, y, current);
-	}
-	for (int x = m.blockxpos; x >= m.selxpos; --x)
-	{
-	  for (int y = m.blockypos; y <= m.selypos; ++y)
-	    m.set(x, y, current);
-	  for (int y = m.blockypos; y >= m.selypos; --y)
-	    m.set(x, y, current);
-	}
 	break;
        case KEY_F5:
 	{
 	  Level::Maptile f5_cur = current;
-	  for (int y = m.blockypos; y <= m.selypos; ++y)
-	  {
-	    for (int x = m.blockxpos; x <= m.selxpos; ++x)
+	  for (int y = std::min(m.blockypos, m.selypos); y <= std::max(m.blockypos, m.selypos); ++y)
+	    for (int x = std::min(m.blockxpos, m.selxpos); x <= std::max(m.blockxpos, m.selxpos); ++x)
 	    {
 	      m.set(x, y, current);
 	      current.sprnum = (current.sprnum + 1) % (Sprite::Sprites[current.groupnum].size());
 	    }
-	    for (int x = m.blockxpos; x >= m.selxpos; --x)
-	    {
-	      m.set(x, y, current);
-	      current.sprnum = (current.sprnum + 1) % (Sprite::Sprites[current.groupnum].size());
-	    }
-	  }
-	  for (int y = m.blockypos; y >= m.selypos; --y)
-	  {
-	    for (int x = m.blockxpos; x <= m.selxpos; ++x)
-	    {
-	      current.sprnum = (current.sprnum + 1) % (Sprite::Sprites[current.groupnum].size());
-	      m.set(x, y, current);
-	    }
-	    for (int x = m.blockxpos; x >= m.selxpos; --x)
-	    {
-	      current.sprnum = (current.sprnum + 1) % (Sprite::Sprites[current.groupnum].size());
-	      m.set(x, y, current);
-	    }
-	  }
 	  current = f5_cur;
 	  break;
 	}
        case KEY_BACKSPACE:
-	for (int x = m.blockxpos; x <= m.selxpos; ++x)
-	{
-	  for (int y = m.blockypos; y <= m.selypos; ++y)
+	for (int y = std::min(m.blockypos, m.selypos); y <= std::max(m.blockypos, m.selypos); ++y)
+	  for (int x = std::min(m.blockxpos, m.selxpos); x <= std::max(m.blockxpos, m.selxpos); ++x)
 	    m.set(x, y, background);
-	  for (int y = m.blockypos; y >= m.selypos; --y)
-	    m.set(x, y, background);
-	}
-	for (int x = m.blockxpos; x >= m.selxpos; --x)
-	{
-	  for (int y = m.blockypos; y <= m.selypos; ++y)
-	    m.set(x, y, background);
-	  for (int y = m.blockypos; y >= m.selypos; --y)
-	    m.set(x, y, background);
-	}
 	break;
        case KEY_1:
 	current.flags ^= COLLIDES;
