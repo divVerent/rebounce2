@@ -265,7 +265,11 @@ void redraw(bitmap buffer, Level::Map &m, IO::IOEntityContainer &ents, nsEntity:
 void load_additional_sprites (nsEntity::IOEntity &e)
 {
   Sprite::Sprites.erase(Sprite::Sprites.begin(), Sprite::Sprites.end());
-  IO::ReadSpriteData (Filename ("BASE.PCX").c_str (), 0);
+  std::string spriteset = e.properties["SPRITESET0"];
+  if (spriteset == "") {
+    spriteset = "BASE.PCX";
+  }
+  IO::ReadSpriteData (Filename (spriteset).c_str (), 0);
   int nSets = str2int(e.properties["SPRITESETS"]);
   for (int i = 1; i <= nSets; ++i)
     ::IO::ReadSpriteData (Filename (e.properties[string("SPRITESET") + int2str(i)]).c_str(), i);
@@ -353,34 +357,46 @@ int main(int argc, char **argv)
       switch (readkey () >> 8)
       {
        case KEY_UP:
-	--m.selypos;
+        if (m.selypos > 0)
+	  --m.selypos;
 	break;
        case KEY_DOWN:
-	++m.selypos;
+        if (m.selypos < MAP_HEIGHT - 1)
+	  ++m.selypos;
 	break;
        case KEY_LEFT:
-	--m.selxpos;
+        if (m.selxpos > 0)
+	  --m.selxpos;
 	break;
        case KEY_RIGHT:
-	++m.selxpos;
+        if (m.selxpos < MAP_WIDTH - 1)
+	  ++m.selxpos;
 	break;
        case KEY_ESC:
 	quit = 1;
        case KEY_PGUP:
-	m.scrollby (0, -SPRHEIGHT, 0, buffer);
-	--m.selypos;
+        if (m.selypos > 0) {
+	  m.scrollby (0, -SPRHEIGHT, 0, buffer);
+	  --m.selypos;
+	}
 	break;
        case KEY_PGDN:
-	m.scrollby (0, SPRHEIGHT, 0, buffer);
-	++m.selypos;
+        if (m.selypos < MAP_HEIGHT - 1) {
+	  m.scrollby (0, SPRHEIGHT, 0, buffer);
+	  ++m.selypos;
+	}
 	break;
        case KEY_HOME:
-	m.scrollby (-SPRWIDTH, 0, 0, buffer);
-	--m.selxpos;
+        if (m.selxpos > 0) {
+	  m.scrollby (-SPRWIDTH, 0, 0, buffer);
+	  --m.selxpos;
+	}
 	break;
        case KEY_END:
-	m.scrollby (SPRWIDTH, 0, 0, buffer);
-	++m.selxpos;
+        if (m.selxpos < MAP_WIDTH - 1) {
+	  m.scrollby (SPRWIDTH, 0, 0, buffer);
+	  ++m.selxpos;
+	}
 	break;
        case KEY_SPACE:
        case KEY_INSERT:
