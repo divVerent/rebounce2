@@ -130,10 +130,18 @@ trouble:
 	@echo -n 'bash$$ '
 	@perl -pe '$$_ = "IGNORE" for values %SIG; $$_="" unless /^make trouble$$/; $$_ and exit; print "bash\$$ "'
 
-alldist: clean
+dll/win32/.done:
+	curl http://cdn.allegro.cc/file/library/allegro/4.4.2/allegro-4.4.2-mingw-4.5.2.zip | bsdtar xvf -
+	mkdir -p dll/win32
+	cp allegro-4.4.2-mingw-4.5.2/bin/allegro-4.4.2-md.dll dll/win32/
+	cp /usr/lib/gcc/i686-w64-mingw32/10-win32/libgcc_s_dw2-1.dll dll/win32/
+	cp /usr/lib/gcc/i686-w64-mingw32/10-win32/libstdc++-6.dll dll/win32/
+	touch dll/win32/.done
+
+alldist: clean dll/win32/.done
 	rm -f dist/*.zip
 	./configure
 	make datdist -j$$(nproc)
-	CXXFLAGS=-I$(HOME)/Downloads/allegro-mingw-4.2.3/include LDFLAGS=-L$(HOME)/Downloads/allegro-mingw-4.2.3/lib ./configure --cross=i686-w64-mingw32 --target=win32
+	CXXFLAGS=-I./allegro-4.4.2-mingw-4.5.2/include LDFLAGS="-Lallegro-4.4.2-mingw-4.5.2/lib -lallegro-4.4.2-md" ./configure --cross=i686-w64-mingw32 --target=win32
 	make datdist -j$$(nproc)
 	zipmerge dist/rebounce2-$(VERSION).$(ZIPEXT) dist/rebounce2-$(VERSION)-*.$(ZIPEXT)
