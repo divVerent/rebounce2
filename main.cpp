@@ -18,7 +18,7 @@
 #include "keys.h"
 #include "animate.h"
 
-#define VERSION "2.6.1"
+#define VERSION "2.7.0"
 #define NOHISCORE // Server is not there yet.
 
 std::string Spielername = "*** N/A ***";
