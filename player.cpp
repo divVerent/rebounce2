@@ -227,6 +227,8 @@ namespace Objects
     void think(int remaining)
     {
       nextthink = 1;  // Think every frame.
+      double factor = (1 - remaining) / 20.0;
+      int r_adjusted = 1000 - (1000 - r) * factor;
       if (teleporting)
       {
 	HandleInput (TELEPORT, 0);
@@ -286,12 +288,12 @@ namespace Objects
       {
 	ddx = (int(right) - int(left)) * speed;
 	ddy = (int(down) - int(up)) * speed;
-	dx *= r;
+	dx *= r_adjusted;
 	dx /= 1000;
 	dx = (dx > limit) ? limit : dx;
 	dx = (dx < -limit) ? -limit : dx;
       }
-      dy *= r;
+      dy *= r_adjusted;
       dy /= 1000;
       dy = (dy > limit) ? limit : dy;
       dy = (dy < -limit) ? -limit : dy;

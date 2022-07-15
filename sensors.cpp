@@ -68,10 +68,7 @@ namespace Objects
       Action = world->ParseAction (action);
       world->Register (this, World::_world::NOGRAVITY, 1);
     }
-    void think(int remaining)
-    {
-      world->Action (this, Action, x, y, w, h);
-      nextthink = delta;
+    void think(int remaining) {
     }
   };
 
@@ -79,6 +76,8 @@ namespace Objects
   {
     int xstate, ystate, xstate2, ystate2;
     bool State;
+    int nominal_delta;
+    double factor;
    public:
     Wind (nsEntity::ConfigMap &m, nsEntity::Entity *w) : Sensor (m, w), State (0),
       initlist_int (xstate),
@@ -86,6 +85,9 @@ namespace Objects
       initlist_int (xstate2),
       initlist_int (ystate2)
     {
+      // Wind acts every frame, unlike other sensors.
+      nominal_delta = delta;
+      delta = 1;
     }
     static void MoveIt (nsEntity::Entity *Actor, nsEntity::Entity *Actend)
     {
@@ -98,11 +100,13 @@ namespace Objects
 	return;
       if (!(w = dynamic_cast<Wind *> (Actor)))
 	return;
-      Actend->dx += w->xstate;
-      Actend->dy += w->ystate;
+      Actend->dx += w->xstate * w->factor;
+      Actend->dy += w->ystate * w->factor;
     }
     void think (int remaining)
     {
+      int actual_delta = delta - remaining;
+      factor = actual_delta / nominal_delta;
       world->ActionBox (this, MoveIt, x, y, w, h);
       nextthink = delta;
     }
