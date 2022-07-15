@@ -106,7 +106,7 @@ namespace Objects
     void think (int remaining)
     {
       int actual_delta = delta - remaining;
-      factor = actual_delta / nominal_delta;
+      factor = actual_delta * 1.0 / nominal_delta;
       world->ActionBox (this, MoveIt, x, y, w, h);
       nextthink = delta;
     }
