@@ -224,15 +224,15 @@ namespace Objects
 
     int timer;
 
-    int think()
+    void think(int remaining)
     {
-      nextthink = 20;      // 40 fps => 25 waere korrekt
+      nextthink = 1;  // Think every frame.
       if (teleporting)
       {
 	HandleInput (TELEPORT, 0);
 	x = _x >> 8;
 	y = _y >> 8;
-	return 1;
+	return;
       }
       if (flags & ::World::_world::DISABLED)
       {
@@ -256,12 +256,12 @@ namespace Objects
 	    dx = 0;
 	    dy = 0;
 	    world->PlaySound (this, "respawn.wav", 128, 1);
-            return 1;
+	    return;
           }
 	  world->PlaySound (this, "gelost.wav", 128, 1);
         }
 	world->kill (this);
-	return 1;
+	return;
       }
 
       int speed = 0;
@@ -360,8 +360,6 @@ namespace Objects
       }
       else
 	my_hud = world->get_hud (num);
-
-      return 1;
     }
   };
 
@@ -392,11 +390,10 @@ namespace Objects
 	me->Homicide ();
       }
     }
-    int think ()
+    void think (int remaining)
     {
       world->ActionBox (this, doit, x, y, w, h);
       nextthink = 100;
-      return 1;
     }
     bool Homicide ()
     {

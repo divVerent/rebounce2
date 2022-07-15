@@ -101,7 +101,7 @@ namespace Objects
       if (!delta)
 	delta = 50;
     }
-    int think ()
+    void think (int remaining)
     {
       world->Action (this, ::World::_world::FIND, x, y, w, h, 1);
       if (world->Found)
@@ -110,7 +110,6 @@ namespace Objects
 	HandleInput (TOGGLE, 0);
       }
       nextthink = delta;
-      return 1;
     }
   };
 
@@ -155,13 +154,11 @@ namespace Objects
 	nextthink = -1;
       // time to initialization
     }
-    int think ()
+    void think (int remaining)
     {
       // not again, just once
       HandleInput (TOGGLE, 1);
       ready = 1;
-      // just to load the state into State
-      return 1;
     }
     bool HandleInput (int key, bool pressed)
     {
@@ -268,7 +265,7 @@ namespace Objects
       if (TimeTable.size() && !off)
 	nextthink = TimeTable[0].first;
     }
-    int think ()
+    void think (int remaining)
     {
       nsEntity::Entity *e = world->FindTarget (TimeTable[TTIndex].second);
       ++TTIndex %= TimeTable.size ();      // cannot be 0 because of the if in
@@ -283,7 +280,6 @@ namespace Objects
 	e->HandleInput (TOGGLE, 1);
 	e->HandleInput (TOGGLE, 0);
       }
-      return 1;
     }
     bool HandleInput (int key, bool pressed)
     {

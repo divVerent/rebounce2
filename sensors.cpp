@@ -68,11 +68,10 @@ namespace Objects
       Action = world->ParseAction (action);
       world->Register (this, World::_world::NOGRAVITY, 1);
     }
-    int think()
+    void think(int remaining)
     {
       world->Action (this, Action, x, y, w, h);
       nextthink = delta;
-      return 0;
     }
   };
 
@@ -102,11 +101,10 @@ namespace Objects
       Actend->dx += w->xstate;
       Actend->dy += w->ystate;
     }
-    int think ()
+    void think (int remaining)
     {
       world->ActionBox (this, MoveIt, x, y, w, h);
       nextthink = delta;
-      return 0;
     }
     bool HandleInput (int key, bool pressed)
     {
@@ -151,7 +149,7 @@ namespace Objects
     {
       return 0;
     }
-    int think()
+    void think(int remaining)
     {
       world->Action (this, ::World::_world::EXIT, x, y, w, h, 1);
       if (world->Found)
@@ -161,7 +159,6 @@ namespace Objects
 	next2 = s;
       }
       nextthink = delta;
-      return 0;
     }
   };
 
@@ -199,7 +196,7 @@ namespace Objects
       ObjToTeleport = 0;
       delta = 1; // do it every frame
     }
-    int think()
+    void think(int remaining)
     {
       if (ObjToTeleport)
       {
@@ -255,7 +252,7 @@ namespace Objects
 	  world->Register (ObjToTeleport, World::_world::DISABLED, 0);
 	  ObjToTeleport->dx = 0;
 	  ObjToTeleport->dy = 0;
-	  ObjToTeleport->think ();
+	  ObjToTeleport->think (remaining);
 	  ObjToTeleport = 0;
 	}
       }
@@ -291,7 +288,6 @@ namespace Objects
 	}
       }
       nextthink = delta;
-      return 0;
     }
   };
 

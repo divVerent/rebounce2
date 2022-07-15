@@ -77,10 +77,9 @@ namespace Objects
       clear_to_color (*mysprite, bitmap(*mysprite)->vtable->mask_color);
       start = 1;
     }
-    int think ()
+    void think (int remaining)
     {
       Homicide ();
-      return 1;
     }
     static void KillIt (nsEntity::Entity *Actor, nsEntity::Entity *Victim)
     {
@@ -192,7 +191,7 @@ namespace Objects
       nextthink = delta;
     }
 
-    int think ()
+    void think (int remaining)
     {
       if ((world->Action (this, ::World::_world::FIND, x, y, w, h, 1), world->Found))
       {
@@ -204,7 +203,6 @@ namespace Objects
       }
       world->Action (this, ::World::_world::KILL, x, y, w, h);
       nextthink = delta;
-      return 0;
     }
 
     bool Homicide ()
@@ -273,13 +271,12 @@ namespace Objects
       else
 	sprnum = _sprnum;
     }
-    int think ()
+    void think (int remaining)
     {
       if (on)
-	Enemy::think ();
+	Enemy::think (remaining);
       SetSprite ();
       nextthink = delta;
-      return 0;
     }
     bool HandleInput (int key, bool pressed)
     {
@@ -324,9 +321,9 @@ namespace Objects
       if (timer)
 	TimerRunning = 1;
     }
-    int think ()
+    void think (int remaining)
     {
-      Enemy::think ();
+      Enemy::think (remaining);
       if (!TimerRunning)
       {
 	std::string tmp = targets;
@@ -358,7 +355,6 @@ namespace Objects
 	if (timer < 0)
 	  TimerRunning = 0;
       }
-      return 0;
     }
   };
 
@@ -461,9 +457,9 @@ namespace Objects
     {
       throw_nitroglycerine (this, nx, ny, dx, dy, nsize, nexpl, nsprnum, ngroupnum);
     }
-    int think ()
+    void think (int remaining)
     {
-      Enemy::think ();
+      Enemy::think (remaining);
       time += delta;
 
       sprnum = sprstartnum;
@@ -499,8 +495,6 @@ namespace Objects
 	rectfill (hud, 0, 0, x, hud->h-1, makecol (255, 0, 0));
 	rectfill (hud, x, 0, hud->w-1, hud->h-1, makecol (0, 255, 0));
       }
-
-      return 0;
     }
     bool Homicide ()
     {

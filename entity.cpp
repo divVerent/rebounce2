@@ -47,9 +47,8 @@ bool nsEntity::Entity::HandleInput (int key, bool pressed)
   }
   return 0;
 }
-int nsEntity::Entity::think ()
+void nsEntity::Entity::think (int remaining)
 {
-  return 0;
 }
 bool nsEntity::Entity::Homicide ()
 {

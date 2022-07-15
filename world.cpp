@@ -137,8 +137,9 @@ class World::_world::Ticker
 	e->nextthink -= 1000 / f;
 	if (e->nextthink <= 0)
 	{
+	  int remaining = e->nextthink;
 	  e->nextthink = 0;
-	  e->think ();
+	  e->think (remaining);
 	}
       }
       if (!(e->flags & DISABLED))

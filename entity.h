@@ -73,7 +73,7 @@ namespace nsEntity
       SUICIDE, TOGGLE, SWITCHON, SWITCHOFF, TELEPORT, CHEAT };
       enum { PLAYER2 = 256 };
 
-      virtual int think ();                                 // returns timer-ticks to next think
+      virtual void think (int remaining);                   // returns timer-ticks to next think
       virtual bool HandleInput (int key, bool pressed);     // every keypress and every release
       virtual bool Homicide ();
       virtual bool Collided (Entity *);                     // this is 0 normally
