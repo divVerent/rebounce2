@@ -68,7 +68,10 @@ namespace Objects
       Action = world->ParseAction (action);
       world->Register (this, World::_world::NOGRAVITY, 1);
     }
-    void think(int remaining) {
+    void think(int remaining)
+    {
+      world->Action (this, Action, x, y, w, h);
+      nextthink = delta;
     }
   };
 
